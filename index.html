@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>兴农联担 · 银担协同智能授信平台</title>
+<meta name="description" content="兴农联担——银担协同赋能乡村振兴的智能授信平台，高保真产品原型。" />
+<style>
+/* =========================================================
+   兴农联担 · 设计系统
+   纸感账本 × 深松绿 × 印章金  |  Institutional Agri-Finance
+   ========================================================= */
+
+:root{
+  --paper:#F2EEE2;
+  --paper-2:#FCFAF3;
+  --paper-3:#F7F3E8;
+  --ink:#17211B;
+  --ink-2:#4A554D;
+  --ink-3:#7D877E;
+  --line:#E2DAC7;
+  --line-2:#EEE7D7;
+  --green-950:#082119;
+  --green-900:#0B2C22;
+  --green-800:#103C2E;
+  --green-700:#18513F;
+  --green-600:#216850;
+  --green-500:#2E8666;
+  --green-100:#DDE9E1;
+  --gold:#B5893C;
+  --gold-2:#D9BD84;
+  --gold-soft:#F1E5C9;
+  --red:#A23F2B;
+  --red-soft:#F5E4DE;
+  --amber:#B3781F;
+  --amber-soft:#F6EAD3;
+  --blue:#3C6B78;
+  --blue-soft:#E2EDF0;
+  --slate:#5F6E65;
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:"PingFang SC","Microsoft YaHei UI","Microsoft YaHei","Hiragino Sans GB","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","Cascadia Mono","Consolas","Courier New",monospace;
+  --r:3px;
+  --rail-w:238px;
+  --shadow:0 1px 0 rgba(23,33,27,.04),0 12px 34px -22px rgba(23,33,27,.28);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:14px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+::selection{background:var(--gold-soft);color:var(--green-900)}
+h1,h2,h3,h4{margin:0;font-weight:600}
+p{margin:0}
+ul,ol{margin:0;padding:0}
+img{max-width:100%}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.serif{font-family:var(--serif)}
+.mono{font-family:var(--mono)}
+
+/* ---------- 纸纹与细线 ---------- */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(rgba(12,44,34,.035) 1px,transparent 1px),
+    repeating-linear-gradient(0deg,rgba(12,44,34,.018) 0 1px,transparent 1px 4px);
+  background-size:26px 26px,100% 4px;
+  opacity:.55;
+}
+
+/* =========================================================
+   COVER
+   ========================================================= */
+.cover{
+  position:relative;min-height:100vh;padding:40px clamp(28px,5vw,76px) 30px;
+  background:
+    radial-gradient(1200px 700px at 12% -10%,rgba(46,134,102,.28),transparent 62%),
+    radial-gradient(900px 600px at 96% 108%,rgba(181,137,60,.16),transparent 60%),
+    linear-gradient(158deg,#0A241C 0%,#0C2C22 46%,#082018 100%);
+  color:#EDE8D9;overflow:hidden;display:flex;flex-direction:column;
+}
+.cover::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.021) 0 1px,transparent 1px 7px);
+  mix-blend-mode:overlay;opacity:.5;
+}
+.hero-lines{position:absolute;inset:0;opacity:.16;pointer-events:none}
+.cover-head{position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+.brand-lock{display:flex;align-items:center;gap:14px}
+.seal{
+  width:46px;height:46px;border:1px solid rgba(217,189,132,.62);border-radius:2px;
+  display:grid;grid-template-columns:1fr 1fr;place-items:center;
+  font-family:var(--serif);font-size:15px;line-height:1;color:var(--gold-2);
+  letter-spacing:.02em;position:relative;background:rgba(217,189,132,.05)
+}
+.seal::after{content:"";position:absolute;inset:3px;border:1px solid rgba(217,189,132,.22)}
+.seal span{display:block}
+.brand-lock .cn{font-family:var(--serif);font-size:21px;letter-spacing:.14em;color:#F1EAD8}
+.brand-lock .en{font-size:10px;letter-spacing:.22em;color:rgba(237,232,217,.52);text-transform:uppercase;margin-top:2px}
+.cover-tag{
+  border:1px solid rgba(217,189,132,.28);padding:7px 12px;font-size:11px;letter-spacing:.16em;
+  color:rgba(237,232,217,.7);background:rgba(255,255,255,.03)
+}
+.cover-body{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(560px,.88fr);gap:clamp(28px,4vw,64px);align-items:center;flex:1;padding:48px 0 30px}
+.cover-copy{max-width:660px}
+.cover-kicker{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.26em;color:var(--gold-2);text-transform:uppercase}
+.cover-kicker::before{content:"";width:26px;height:1px;background:var(--gold-2);opacity:.8}
+.cover-title{font-family:var(--serif);font-weight:600;font-size:clamp(38px,5vw,64px);line-height:1.14;letter-spacing:.02em;margin:18px 0 0}
+.cover-title em{font-style:normal;color:var(--gold-2)}
+.cover-lead{font-size:15px;line-height:1.9;color:rgba(237,232,217,.76);margin-top:22px;max-width:560px}
+.cover-lead strong{color:#F4EEDD;font-weight:500;border-bottom:1px solid rgba(217,189,132,.42);padding-bottom:1px}
+.cover-facts{display:flex;flex-wrap:wrap;gap:0;margin-top:34px;border-top:1px solid rgba(217,189,132,.18);max-width:600px}
+.cover-fact{padding:16px 26px 0 0;margin-right:26px;position:relative}
+.cover-fact + .cover-fact::before{content:"";position:absolute;left:-26px;top:18px;bottom:6px;width:1px;background:rgba(217,189,132,.16)}
+.cover-fact b{display:block;font-family:var(--serif);font-size:21px;color:#F2EBD9;font-weight:600}
+.cover-fact small{display:block;font-size:10.5px;letter-spacing:.14em;color:rgba(237,232,217,.48);margin-top:4px}
+.cover-roles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.role-card{
+  text-align:left;background:rgba(252,250,243,.055);border:1px solid rgba(217,189,132,.19);
+  padding:20px 18px 18px;border-radius:2px;color:#EDE8D9;position:relative;overflow:hidden;
+  transition:background .22s ease,border-color .22s ease,transform .22s ease;
+  backdrop-filter:blur(2px);
+}
+.role-card:hover{background:rgba(252,250,243,.1);border-color:rgba(217,189,132,.44);transform:translateY(-2px)}
+.role-card .idx{font-family:var(--serif);font-size:11px;letter-spacing:.18em;color:var(--gold-2);opacity:.75}
+.role-card h3{font-family:var(--serif);font-weight:600;font-size:20px;margin:10px 0 6px;letter-spacing:.04em}
+.role-card p{font-size:11.5px;line-height:1.7;color:rgba(237,232,217,.56);min-height:40px}
+.role-card .go{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:1px solid rgba(217,189,132,.16);font-size:10.5px;letter-spacing:.14em;color:rgba(237,232,217,.66)}
+.role-card .go i{display:inline-block;width:18px;height:1px;background:var(--gold-2);position:relative;transition:width .2s ease}
+.role-card .go i::after{content:"";position:absolute;right:0;top:-2px;width:5px;height:5px;border-top:1px solid var(--gold-2);border-right:1px solid var(--gold-2);transform:rotate(45deg)}
+.role-card:hover .go i{width:28px}
+.cover-foot{position:relative;z-index:2;display:flex;justify-content:space-between;gap:24px;border-top:1px solid rgba(217,189,132,.16);padding-top:18px;font-size:10.5px;letter-spacing:.08em;color:rgba(237,232,217,.42)}
+.cover-foot span{max-width:62%}
+
+/* =========================================================
+   SHELL
+   ========================================================= */
+.app-shell{position:relative;z-index:1}
+.shell{display:grid;grid-template-columns:var(--rail-w) minmax(0,1fr);min-height:100vh}
+.rail{
+  position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  background:linear-gradient(179deg,#0A251C 0%,#0D3126 48%,#0A231B 100%);
+  color:#E9E5D6;border-right:1px solid rgba(217,189,132,.16);overflow:hidden;
+}
+.rail::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 1px,transparent 1px 6px);pointer-events:none}
+.rail-brand{padding:24px 22px 22px;border-bottom:1px solid rgba(217,189,132,.14);position:relative;z-index:1}
+.rail-brand .brand-lock{gap:11px}
+.rail-brand .seal{width:38px;height:38px;font-size:12.5px}
+.rail-brand .cn{font-size:16px;letter-spacing:.13em}
+.rail-brand .en{font-size:8.5px;letter-spacing:.2em}
+.rail-org{padding:14px 22px 6px;font-size:10px;letter-spacing:.16em;color:rgba(233,229,214,.42);position:relative;z-index:1}
+.rail-nav{flex:1;overflow:auto;padding:8px 14px 20px;position:relative;z-index:1;scrollbar-width:thin}
+.rail-group{font-size:9.5px;letter-spacing:.2em;color:rgba(217,189,132,.58);margin:18px 8px 7px}
+.rail-item{
+  display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:2px;color:rgba(233,229,214,.72);
+  font-size:12.5px;letter-spacing:.02em;border:none;background:transparent;width:100%;text-align:left;
+  transition:background .16s ease,color .16s ease;position:relative
+}
+.rail-item:hover{background:rgba(255,255,255,.055);color:#F1EBDD}
+.rail-item.active{background:rgba(217,189,132,.1);color:#F6F0DF}
+.rail-item.active::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:2px;background:var(--gold-2)}
+.rail-item svg{width:15px;height:15px;opacity:.62;flex:0 0 auto}
+.rail-item.active svg{opacity:.94}
+.rail-item .tail{margin-left:auto;font-size:10px;color:rgba(233,229,214,.4)}
+.rail-item.active .tail{color:var(--gold-2)}
+.rail-foot{padding:14px 22px 20px;border-top:1px solid rgba(217,189,132,.14);font-size:10px;letter-spacing:.06em;color:rgba(233,229,214,.4);position:relative;z-index:1;line-height:1.8}
+.rail-foot b{display:block;color:rgba(233,229,214,.7);font-weight:500;letter-spacing:.12em;font-size:10.5px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{
+  height:60px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:0 clamp(18px,2.6vw,36px);border-bottom:1px solid var(--line);
+  background:rgba(242,238,226,.88);backdrop-filter:blur(10px);position:sticky;top:0;z-index:30
+}
+.crumb{display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.1em;color:var(--ink-3)}
+.crumb b{font-weight:500;color:var(--ink-2);font-family:var(--serif);font-size:12.5px;letter-spacing:.06em}
+.crumb span{opacity:.55}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.demo-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.12em;color:var(--slate);border:1px solid var(--line);padding:5px 9px;background:rgba(252,250,243,.6)}
+.demo-tag i{width:5px;height:5px;border-radius:50%;background:var(--green-500)}
+.role-pill{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.06em;color:var(--green-800);background:var(--green-100);border:1px solid #C8D9CD;padding:5px 10px}
+.role-pill svg{width:12px;height:12px}
+.switch-role{border:1px solid var(--line);background:transparent;color:var(--ink-2);font-size:10.5px;letter-spacing:.06em;padding:6px 10px;transition:.18s}
+.switch-role:hover{border-color:var(--gold);color:var(--green-800)}
+.page{padding:clamp(22px,2.8vw,38px) clamp(18px,2.8vw,38px) 48px;min-width:0}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:24px}
+.eyebrow{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--gold);opacity:.9}
+.page-title{font-family:var(--serif);font-size:30px;font-weight:600;letter-spacing:.02em;line-height:1.24;margin-top:8px}
+.page-title .thin{font-weight:400;color:var(--ink-3);font-size:22px}
+.page-sub{font-size:12px;color:var(--ink-3);margin-top:7px;line-height:1.7;max-width:760px}
+.page-actions{display:flex;gap:9px;flex-wrap:wrap}
+
+/* ---------- 按钮 ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:2px;border:1px solid transparent;padding:8px 15px;font-size:12px;letter-spacing:.04em;transition:.18s ease;white-space:nowrap}
+.btn svg{width:13px;height:13px}
+.btn-primary{background:linear-gradient(180deg,var(--green-700),var(--green-800));color:#F7F2E4;border-color:#0E4634;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(8,33,25,.18)}
+.btn-primary:hover{background:linear-gradient(180deg,#1C5D47,#0F4534);transform:translateY(-1px)}
+.btn-gold{background:linear-gradient(180deg,#C49A4E,#A87C31);color:#231A0A;border-color:#8A6424;box-shadow:inset 0 1px 0 rgba(255,255,255,.26)}
+.btn-gold:hover{transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line);background:rgba(252,250,243,.7);color:var(--ink-2)}
+.btn-ghost:hover{border-color:#CDBF9F;background:#FCFAF3;color:var(--green-800)}
+.btn-danger{border-color:#D8B3A7;background:var(--red-soft);color:var(--red)}
+.btn-danger:hover{background:#F0D7CF}
+.btn-text{border:none;background:none;color:var(--green-700);font-size:11.5px;padding:4px 0;border-bottom:1px solid transparent}
+.btn-text:hover{border-bottom-color:var(--green-700)}
+.btn-sm{padding:5px 10px;font-size:11px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none!important}
+.icon-btn{width:30px;height:30px;padding:0;border:1px solid var(--line);background:rgba(252,250,243,.65);display:inline-flex;align-items:center;justify-content:center;border-radius:2px;color:var(--ink-2);transition:.18s}
+.icon-btn:hover{border-color:var(--gold);color:var(--green-800)}
+
+/* ---------- 卡片 / 栅格 ---------- */
+.card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);min-width:0}
+.card-pad{padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 20px;border-bottom:1px solid var(--line-2)}
+.card-head h3{font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.04em}
+.card-head .hint{font-size:10.5px;letter-spacing:.05em;color:var(--ink-3)}
+.card-body{padding:18px 20px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.two-col{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(300px,.78fr);gap:16px}
+.two-col-even{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.three-col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.four-col{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.section-title{display:flex;align-items:baseline;gap:10px;margin:26px 0 12px}
+.section-title h2{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:.03em}
+.section-title small{font-size:10.5px;color:var(--ink-3);letter-spacing:.06em}
+.hairline{height:1px;background:var(--line-2);margin:16px 0}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid;grid-template-columns:1.35fr repeat(4,minmax(0,1fr));gap:14px}
+.kpi{background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:17px 18px 15px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.kpi.dark{background:linear-gradient(160deg,#123F32,#0B2C22);color:#EFEAD9;border-color:#0F4634}
+.kpi.dark::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.024) 0 1px,transparent 1px 5px);pointer-events:none}
+.kpi-label{font-size:10px;letter-spacing:.14em;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.kpi.dark .kpi-label{color:rgba(239,234,217,.56)}
+.kpi-value{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1.2;margin-top:9px;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.kpi-value small{font-family:var(--sans);font-size:11px;font-weight:400;color:var(--ink-3);margin-left:4px}
+.kpi.dark .kpi-value small{color:rgba(239,234,217,.56)}
+.kpi-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:10.5px;color:var(--ink-3)}
+.kpi.dark .kpi-foot{color:rgba(239,234,217,.5)}
+.delta{font-size:10px;letter-spacing:.03em;color:var(--green-600)}
+.delta.down{color:var(--red)}
+.kpi-spark{position:absolute;right:12px;bottom:10px;width:66px;height:26px;opacity:.5}
+
+/* ---------- 表格 ---------- */
+.table{width:100%;border-collapse:collapse}
+.table th{
+  text-align:left;font-weight:500;font-size:10px;letter-spacing:.1em;color:var(--ink-3);
+  padding:10px 12px;border-bottom:1px solid var(--line);background:var(--paper-3);white-space:nowrap
+}
+.table td{padding:12px;border-bottom:1px solid var(--line-2);font-size:12px;vertical-align:middle;color:var(--ink-2)}
+.table tr:last-child td{border-bottom:none}
+.table tbody tr{transition:background .14s ease;cursor:pointer}
+.table tbody tr:hover{background:#F7F2E4}
+.table .num{font-variant-numeric:tabular-nums}
+.table .strong{color:var(--ink);font-weight:500}
+.table .muted{color:var(--ink-3);font-size:11px}
+.table-wrap{overflow:auto;scrollbar-width:thin}
+.table-wrap .table{min-width:900px}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;padding:3px 8px;border-radius:2px;border:1px solid;line-height:1.5;white-space:nowrap;letter-spacing:.02em}
+.pill i{width:4px;height:4px;border-radius:50%;flex:0 0 auto}
+.pill-green{color:#1B6249;background:#E4EEE6;border-color:#C9DBCD}.pill-green i{background:#2E8666}
+.pill-amber{color:#8C5C13;background:var(--amber-soft);border-color:#E6D2AA}.pill-amber i{background:#B3781F}
+.pill-red{color:#8D3323;background:var(--red-soft);border-color:#E3C2B7}.pill-red i{background:#A23F2B}
+.pill-blue{color:#2E5A66;background:var(--blue-soft);border-color:#C7DBE0}.pill-blue i{background:#3C6B78}
+.pill-gray{color:var(--slate);background:#EDEAE0;border-color:#DCD7C8}.pill-gray i{background:#7D877E}
+.pill-gold{color:#7C5B1D;background:var(--gold-soft);border-color:#E1CFA4}.pill-gold i{background:#B5893C}
+
+.meter{height:4px;background:#E7E0CF;position:relative;width:72px;display:inline-block;vertical-align:middle;overflow:hidden}
+.meter > span{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#2E8666,#18513F);width:var(--w,60%)}
+.meter.amber > span{background:linear-gradient(90deg,#D3A055,#B3781F)}
+.meter.red > span{background:linear-gradient(90deg,#C67457,#A23F2B)}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;align-items:center;gap:2px;border-bottom:1px solid var(--line);overflow:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:none;background:transparent;padding:10px 15px;font-size:12px;color:var(--ink-3);border-bottom:2px solid transparent;white-space:nowrap;transition:.16s}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--green-800);border-bottom-color:var(--gold);font-weight:500;background:linear-gradient(180deg,transparent,rgba(181,137,60,.06))}
+.tab .cnt{font-size:9.5px;color:var(--ink-3);margin-left:4px}
+
+/* ---------- 待办 ---------- */
+.todo-item{display:flex;align-items:center;gap:13px;padding:12px 0;border-bottom:1px solid var(--line-2);cursor:pointer;transition:.15s}
+.todo-item:last-child{border-bottom:none}
+.todo-item:hover{padding-left:4px}
+.todo-rank{font-family:var(--serif);font-size:11px;color:var(--gold);width:18px;flex:0 0 auto;opacity:.8}
+.todo-main{flex:1;min-width:0}
+.todo-main b{display:block;font-size:12.5px;color:var(--ink);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.todo-main > span{display:block;font-size:10.5px;color:var(--ink-3);margin-top:3px}
+.todo-main .tag{display:inline-block;margin-top:5px}
+.todo-right{text-align:right;flex:0 0 auto}
+.todo-right .amt{font-family:var(--serif);font-size:14px;color:var(--ink);display:block}
+.todo-right small{font-size:9.5px;color:var(--ink-3)}
+.tag{display:inline-block;font-size:9.5px;letter-spacing:.05em;padding:1px 6px;border:1px solid var(--line);color:var(--ink-3);background:#F8F4E9;margin-left:5px;vertical-align:1px}
+.tag.hot{color:var(--red);border-color:#E3C2B7;background:#FBF0EC}
+
+/* ---------- 图表 ---------- */
+.barchart{display:flex;align-items:flex-end;gap:9px;height:120px;padding-top:8px}
+.barchart .bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.barchart .bar i{width:100%;max-width:22px;background:linear-gradient(180deg,#3A9673,#1B5C46);display:block;transition:height .5s cubic-bezier(.2,.7,.2,1);border-radius:1px 1px 0 0;position:relative}
+.barchart .bar i.today{background:linear-gradient(180deg,#D3B16B,#B5893C)}
+.barchart .bar span{font-size:9px;color:var(--ink-3);letter-spacing:.03em}
+.barchart .bar b{font-size:9.5px;color:var(--ink-2);font-weight:500;font-variant-numeric:tabular-nums}
+.hbars{display:flex;flex-direction:column;gap:11px}
+.hbar{display:grid;grid-template-columns:56px 1fr 46px;align-items:center;gap:10px;font-size:10.5px;color:var(--ink-2)}
+.hbar .track{height:6px;background:#E8E1D1;position:relative;border-radius:1px;overflow:hidden}
+.hbar .track i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#2E8666,#18513F)}
+.hbar .track i.gold{background:linear-gradient(90deg,#C9A25B,#A87C31)}
+.hbar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-3)}
+.donut-wrap{display:flex;align-items:center;gap:18px}
+.donut{width:104px;height:104px;position:relative;flex:0 0 auto}
+.donut svg{width:100%;height:100%}
+.donut b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;color:var(--ink)}
+.donut b small{font-family:var(--sans);font-size:8.5px;color:var(--ink-3);letter-spacing:.08em;margin-top:2px}
+.legend{display:flex;flex-direction:column;gap:7px;font-size:10.5px;color:var(--ink-2)}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:6px;height:6px;border-radius:50%}
+
+/* ---------- 进度 ---------- */
+.flow{display:flex;align-items:flex-start;gap:0;margin:6px 0 2px}
+.flow-step{flex:1;position:relative;text-align:center;min-width:0}
+.flow-step::before{content:"";position:absolute;top:13px;left:50%;right:-50%;height:1px;background:var(--line);z-index:0}
+.flow-step:last-child::before{display:none}
+.flow-step.done::before,.flow-step.current::before{background:var(--green-500)}
+.flow-dot{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--paper-2);display:flex;align-items:center;justify-content:center;margin:0 auto;position:relative;z-index:1;font-family:var(--serif);font-size:10px;color:var(--ink-3)}
+.flow-step.done .flow-dot{background:var(--green-700);border-color:var(--green-800);color:#F3EEDD}
+.flow-step.current .flow-dot{border-color:var(--gold);color:#7C5B1D;background:var(--gold-soft);box-shadow:0 0 0 4px rgba(181,137,60,.12)}
+.flow-label{font-size:10.5px;color:var(--ink-3);margin-top:8px;letter-spacing:.02em}
+.flow-step.done .flow-label,.flow-step.current .flow-label{color:var(--ink)}
+.flow-time{font-size:9px;color:var(--ink-3);margin-top:2px;font-variant-numeric:tabular-nums}
+
+/* ---------- 字段溯源 ---------- */
+.field-group{margin-bottom:16px}
+.field-group h4{font-family:var(--serif);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.field-group h4::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.field-row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:6px 0;border-bottom:1px dotted #E8E1D2;font-size:11.5px}
+.field-row:last-child{border-bottom:none}
+.field-row .k{color:var(--ink-3);flex:0 0 auto}
+.field-row .v{color:var(--ink);font-variant-numeric:tabular-nums;text-align:right;border-bottom:1px dashed rgba(46,134,102,.35);cursor:pointer;transition:.15s}
+.field-row .v:hover{color:var(--green-700);border-bottom-color:var(--green-600)}
+.field-row .v.warn{color:var(--red);border-bottom-color:rgba(162,63,43,.4)}
+.source-card{background:linear-gradient(180deg,#FCFAF3,#F7F2E4);border:1px solid var(--line);border-radius:3px;padding:16px;box-shadow:var(--shadow);position:sticky;top:78px}
+.source-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.source-head h3{font-family:var(--serif);font-size:14px;font-weight:600}
+.source-head .conf{font-size:9.5px;letter-spacing:.08em;color:var(--green-700);border:1px solid #C9DBCD;background:#E4EEE6;padding:2px 6px}
+.source-list{display:flex;flex-direction:column;gap:0}
+.source-item{display:grid;grid-template-columns:66px 1fr;gap:10px;padding:8px 0;border-bottom:1px dotted #E6DFCE;font-size:10.5px;line-height:1.6}
+.source-item:last-child{border-bottom:none}
+.source-item label{color:var(--ink-3)}
+.source-item span{color:var(--ink-2);word-break:break-all}
+.evidence{margin-top:12px;border:1px dashed #D9CFB6;padding:9px;display:flex;align-items:center;gap:10px;background:#FBF7EA;cursor:pointer;transition:.18s}
+.evidence:hover{border-color:var(--gold)}
+.evidence .thumb{width:42px;height:32px;background:linear-gradient(135deg,#DDE9E1,#C9DBCD);border:1px solid #BFD2C4;display:flex;align-items:center;justify-content:center;font-size:8px;color:#2E6A50;letter-spacing:.06em;flex:0 0 auto}
+.evidence small{display:block;font-size:9px;color:var(--ink-3);letter-spacing:.04em}
+.evidence b{display:block;font-size:10.5px;font-weight:500;color:var(--ink-2)}
+
+/* ---------- 额度测算 ---------- */
+.formula{border:1px solid #D8CDB2;background:
+  linear-gradient(180deg,#FBF7EA,#F6EEDC);padding:16px 18px;position:relative;overflow:hidden;border-radius:2px}
+.formula::after{content:"计算口径 V1.3";position:absolute;right:12px;top:10px;font-size:8.5px;letter-spacing:.14em;color:#A98B58}
+.formula .label{font-size:9.5px;letter-spacing:.16em;color:#8B7139}
+.formula .expr{font-family:var(--mono);font-size:12.5px;color:#3D3321;margin-top:8px;line-height:1.9;word-break:break-word}
+.formula .expr b{color:var(--green-700)}
+.factor-row{display:grid;grid-template-columns:1.3fr .7fr 1fr 64px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line-2);font-size:11.5px}
+.factor-row:last-child{border-bottom:none}
+.factor-row .fname{color:var(--ink);font-weight:500}
+.factor-row .fname small{display:block;font-weight:400;color:var(--ink-3);font-size:9.5px;margin-top:2px}
+.factor-bar{height:5px;background:#E9E2D2;position:relative;overflow:hidden}
+.factor-bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#4A9C7B,#1B5C46)}
+.factor-row .val{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.factor-row .dir{text-align:center;font-size:10px;color:var(--green-600)}
+.factor-row .dir.neg{color:var(--red)}
+.big-amount{font-family:var(--serif);font-size:42px;font-weight:600;line-height:1.1;color:var(--green-900);letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.big-amount small{font-family:var(--sans);font-size:12px;color:var(--ink-3);margin-left:5px;font-weight:400}
+.coef-chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid var(--line);background:#FBF8EF;padding:5px 9px;font-size:10.5px;color:var(--ink-3);border-radius:2px;transition:.16s}
+.chip.on{border-color:#9EC3AC;background:#DDEBE2;color:#18513F;font-weight:500}
+.chip:hover{border-color:var(--gold)}
+.adjust-box{border:1px dashed #D8CDB2;background:#FBF7EA;padding:14px;margin-top:14px}
+.adjust-box label{font-size:10px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:6px}
+.input{width:100%;border:1px solid var(--line);background:#FCFAF3;padding:8px 10px;font-size:12px;border-radius:2px;outline:none;transition:.16s}
+.input:focus{border-color:var(--green-600);box-shadow:0 0 0 3px rgba(46,134,102,.1)}
+textarea.input{resize:vertical;min-height:70px;line-height:1.7}
+.select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#7D877E 50%),linear-gradient(135deg,#7D877E 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:26px}
+.inline-field{display:flex;align-items:center;gap:8px}
+.inline-field .unit{font-size:10px;color:var(--ink-3);white-space:nowrap}
+
+/* ---------- 报告 ---------- */
+.report-doc{background:#FFFDF8;border:1px solid var(--line);padding:26px 30px;box-shadow:0 2px 14px -10px rgba(23,33,27,.4);font-family:var(--serif);line-height:2;font-size:12.5px;color:#2B352E;position:relative}
+.report-doc h3{font-size:17px;text-align:center;letter-spacing:.12em;margin-bottom:14px;font-weight:600}
+.report-doc .meta{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.06em;color:var(--ink-3);border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:14px;font-family:var(--sans)}
+.report-doc p{margin:0 0 9px;text-indent:2em}
+.report-doc .cite{font-family:var(--sans);font-size:9px;background:#E4EEE6;color:#1B6249;border:1px solid #C9DBCD;padding:0 4px;margin:0 2px;letter-spacing:.02em;cursor:pointer;white-space:nowrap}
+.report-doc .sec{font-family:var(--serif);font-weight:600;margin:14px 0 6px;font-size:13px;letter-spacing:.04em}
+
+/* ---------- 时间线 ---------- */
+.timeline{position:relative;padding-left:22px}
+.timeline::before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:1px;background:var(--line)}
+.event{position:relative;padding:0 0 18px}
+.event::before{content:"";position:absolute;left:-22px;top:4px;width:9px;height:9px;border-radius:50%;border:1px solid #B9C9BD;background:var(--paper-2);z-index:1}
+.event:first-child::before{background:var(--green-600);border-color:var(--green-700);box-shadow:0 0 0 3px rgba(46,134,102,.12)}
+.event .etime{font-size:9.5px;color:var(--ink-3);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.event .etitle{font-size:12px;color:var(--ink);font-weight:500;margin-top:2px}
+.event .etitle span{font-weight:400;color:var(--ink-3);font-size:10.5px;margin-left:8px}
+.event .edesc{font-size:10.5px;color:var(--ink-3);line-height:1.7;margin-top:3px}
+
+/* ---------- 手机端 ---------- */
+.client-view{padding:clamp(20px,3vw,40px) clamp(18px,3.4vw,48px) 48px;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:clamp(24px,4vw,64px);align-items:start}
+.journey-left{max-width:640px;padding-top:8px}
+.journey-title{font-family:var(--serif);font-size:38px;line-height:1.3;letter-spacing:.02em;margin-top:10px}
+.journey-title em{font-style:normal;color:var(--green-600)}
+.journey-lead{font-size:12.5px;color:var(--ink-3);line-height:1.9;margin-top:14px;max-width:540px}
+.journey-steps{margin-top:30px;border-top:1px solid var(--line)}
+.jstep{display:grid;grid-template-columns:38px 1fr auto;gap:14px;padding:17px 8px 17px 2px;border-bottom:1px solid var(--line-2);cursor:pointer;transition:.18s;position:relative;align-items:start}
+.jstep:hover{background:rgba(252,250,243,.7);padding-left:8px}
+.jstep.active{background:linear-gradient(90deg,rgba(181,137,60,.08),transparent 80%)}
+.jstep.active::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:2px;background:var(--gold)}
+.jstep .jno{font-family:var(--serif);font-size:19px;color:#C4B287;line-height:1.2}
+.jstep.active .jno{color:var(--gold)}
+.jstep h3{font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.03em;display:flex;align-items:center;gap:8px}
+.jstep p{font-size:10.5px;color:var(--ink-3);line-height:1.7;margin-top:4px;max-width:420px}
+.jstep .jt{font-size:9.5px;color:var(--ink-3);white-space:nowrap;letter-spacing:.04em;text-align:right}
+.jstep .jt b{display:block;color:var(--green-700);font-weight:500;font-size:10.5px}
+.journey-note{margin-top:18px;display:flex;gap:9px;font-size:10px;color:var(--ink-3);line-height:1.7;border-left:2px solid var(--gold-2);padding-left:12px}
+.phone-wrap{position:sticky;top:86px;display:flex;flex-direction:column;align-items:center}
+.phone{width:392px;height:800px;background:#0C2C22;border-radius:46px;padding:9px;box-shadow:0 40px 80px -40px rgba(8,33,25,.55),0 0 0 1px rgba(217,189,132,.22),inset 0 0 0 2px rgba(255,255,255,.06);position:relative}
+.phone::after{content:"";position:absolute;left:-3px;top:150px;width:2px;height:52px;background:#1B4C3B;border-radius:2px 0 0 2px}
+.phone-screen{width:100%;height:100%;background:#FBF8EF;border-radius:38px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.m-status{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:10px;color:#2A352E;font-variant-numeric:tabular-nums;flex:0 0 auto}
+.m-status .island{position:absolute;left:50%;transform:translateX(-50%);top:8px;width:86px;height:20px;background:#0B2019;border-radius:12px}
+.m-status .right{display:flex;gap:5px;align-items:center}
+.m-status .sig{display:flex;gap:2px;align-items:flex-end}
+.m-status .sig i{width:2px;background:#2A352E;display:block}
+.m-apphead{padding:6px 20px 12px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}
+.m-brand{display:flex;align-items:center;gap:8px}
+.m-brand .mseal{width:24px;height:24px;border:1px solid #B5893C;color:#8F6A26;display:grid;grid-template-columns:1fr 1fr;place-items:center;font-family:var(--serif);font-size:7px;line-height:1}
+.m-brand b{font-family:var(--serif);font-size:13px;letter-spacing:.08em;font-weight:600}
+.m-screen{flex:1;overflow:auto;padding:2px 20px 16px;scrollbar-width:none}
+.m-screen::-webkit-scrollbar{display:none}
+.m-tabs{flex:0 0 auto;height:58px;border-top:1px solid #E7DFCE;display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:10px;background:rgba(251,248,239,.96)}
+.m-tabs div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;color:#8A938B}
+.m-tabs div svg{width:16px;height:16px;opacity:.6}
+.m-tabs div.on{color:#18513F}
+.m-tabs div.on svg{opacity:1}
+.m-hero{background:linear-gradient(150deg,#123F32,#0B2C22);color:#F1ECDC;border-radius:4px;padding:16px;position:relative;overflow:hidden}
+.m-hero::after{content:"";position:absolute;right:-22px;top:-28px;width:110px;height:110px;border:1px solid rgba(217,189,132,.2);border-radius:50%}
+.m-hero .k{font-size:9px;letter-spacing:.14em;color:rgba(241,236,220,.55)}
+.m-hero .v{font-family:var(--serif);font-size:30px;font-weight:600;margin-top:6px;font-variant-numeric:tabular-nums}
+.m-hero .v small{font-size:10px;font-family:var(--sans);color:rgba(241,236,220,.6);margin-left:3px}
+.m-hero .foot{display:flex;justify-content:space-between;font-size:9px;color:rgba(241,236,220,.55);margin-top:10px;border-top:1px solid rgba(217,189,132,.16);padding-top:8px}
+.m-label{font-size:9px;letter-spacing:.14em;color:#7D877E;margin:16px 0 8px;display:flex;align-items:center;justify-content:space-between}
+.m-card{background:#FCFAF3;border:1px solid #E2DAC7;border-radius:3px;padding:13px}
+.m-form-row{display:flex;align-items:center;justify-content:space-between;padding:10px 2px;border-bottom:1px solid #EEE7D7;font-size:11px}
+.m-form-row label{color:#7D877E}
+.m-form-row b{font-weight:500;color:#17211B;font-variant-numeric:tabular-nums}
+.m-input{border:1px solid #E2DAC7;background:#FCFAF3;width:100%;padding:9px 10px;font-size:11px;border-radius:2px;outline:none}
+.m-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px;background:linear-gradient(180deg,#1C5D47,#0F4534);color:#F7F2E4;border:none;border-radius:2px;font-size:11.5px;letter-spacing:.06em;margin-top:13px}
+.m-btn.ghost{background:transparent;border:1px solid #D8CFB9;color:#4A554D}
+.m-pill{display:inline-flex;align-items:center;gap:4px;font-size:8.5px;padding:2px 6px;border:1px solid #C9DBCD;background:#E4EEE6;color:#1B6249;border-radius:2px}
+.m-progress{display:flex;gap:4px;margin-top:10px}
+.m-progress i{height:3px;flex:1;background:#E4DCC9;border-radius:2px}
+.m-progress i.on{background:#B5893C}
+.m-step-title{font-family:var(--serif);font-size:20px;line-height:1.35;letter-spacing:.02em;margin:6px 0 4px}
+.m-step-sub{font-size:9.5px;color:#7D877E;line-height:1.6}
+.m-photo{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.m-photo div{height:62px;border:1px dashed #D8CFB9;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:8px;color:#8A938B;background:#F8F4E9}
+.m-photo div.done{border-style:solid;border-color:#C9DBCD;background:linear-gradient(150deg,#E6EFE8,#F2F7F3);color:#2E6A50}
+.m-timeline{position:relative;margin-top:4px}
+.m-tl{display:flex;gap:10px;padding-bottom:14px;position:relative}
+.m-tl .dot{width:14px;height:14px;border-radius:50%;border:1px solid #D3C7AC;background:#FCFAF3;flex:0 0 auto;position:relative;z-index:1;display:flex;align-items:center;justify-content:center}
+.m-tl .dot.done{background:#18513F;border-color:#18513F;color:#F1ECDC;font-size:7px}
+.m-tl .dot.cur{border-color:#B5893C;background:#F1E5C9}
+.m-tl::before{content:"";position:absolute;left:6.5px;top:14px;bottom:0;width:1px;background:#E2DAC7}
+.m-tl:last-child::before{display:none}
+.m-tl b{display:block;font-size:10.5px;color:#17211B;font-weight:500}
+.m-tl span{display:block;font-size:8.5px;color:#7D877E;margin-top:2px;line-height:1.6}
+.m-tl .st{margin-left:auto;flex:0 0 auto;font-size:8px;color:#8C5C13}
+.m-note{font-size:8.5px;line-height:1.7;color:#8A6B2B;background:#F6EAD3;border-left:2px solid #C9A25B;padding:8px 9px;margin-top:10px}
+.m-listitem{display:flex;align-items:center;justify-content:space-between;padding:9px 2px;border-bottom:1px solid #EEE7D7;font-size:10.5px}
+.m-listitem:last-child{border-bottom:none}
+.m-listitem b{font-weight:500}
+.m-listitem small{display:block;font-size:8.5px;color:#8A938B;margin-top:2px}
+
+/* ---------- 模板编辑器 ---------- */
+.template-list{display:flex;flex-direction:column;gap:2px}
+.tpl{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:12px 12px;border:1px solid transparent;border-bottom:1px solid var(--line-2);cursor:pointer;transition:.16s;background:transparent;text-align:left;width:100%}
+.tpl:hover{background:#F8F4E8}
+.tpl.active{background:#FCFAF3;border-color:var(--line);box-shadow:var(--shadow)}
+.tpl .nm{font-family:var(--serif);font-size:13px;font-weight:600;letter-spacing:.03em}
+.tpl .mt{font-size:9.5px;color:var(--ink-3);margin-top:4px;line-height:1.6}
+.tpl .ver{font-size:9px;color:#7C5B1D;background:var(--gold-soft);border:1px solid #E1CFA4;padding:1px 5px;white-space:nowrap}
+.editor-split{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);gap:0;border-top:1px solid var(--line);min-height:640px}
+.editor-form{padding:20px 22px;border-right:1px solid var(--line);overflow:auto;max-height:720px}
+.editor-preview{background:#F7F3E8;padding:20px 22px;overflow:auto;max-height:720px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:10px;letter-spacing:.12em;color:var(--ink-3);margin-bottom:7px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.form-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.check{display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid var(--line);background:#FBF8EF;font-size:10.5px;cursor:pointer;transition:.16s;border-radius:2px}
+.check:hover{border-color:var(--gold)}
+.check.on{border-color:#BFD2C4;background:#E4EEE6;color:#1B6249}
+.check i{width:11px;height:11px;border:1px solid #C9C1AC;display:flex;align-items:center;justify-content:center;font-size:8px;flex:0 0 auto;background:#fff}
+.check.on i{background:var(--green-700);border-color:var(--green-800);color:#fff}
+.trial{background:#FCFAF3;border:1px solid var(--line);padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.trial-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.trial-head b{font-family:var(--serif);font-size:12px;font-weight:600}
+.trial-line{display:flex;justify-content:space-between;font-size:10.5px;padding:4px 0;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.trial-line strong{color:var(--ink-2);font-weight:500}
+.trial-result{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid var(--line);margin-top:9px;padding-top:9px}
+.trial-result .amt{font-family:var(--serif);font-size:24px;color:var(--green-900);font-weight:600;font-variant-numeric:tabular-nums}
+.trial-result .flag{font-size:9px;padding:2px 6px;border:1px solid #C9DBCD;background:#E4EEE6;color:#1B6249}
+.rule-json{font-family:var(--mono);font-size:10px;line-height:1.9;background:#0E2C23;color:#CFE0D5;padding:14px;border-radius:2px;overflow:auto;max-height:270px;margin-top:12px}
+.rule-json .k{color:#D9BD84}
+.rule-json .s{color:#9FCBB4}
+
+/* ---------- 弹层 ---------- */
+.modal-mask{position:fixed;inset:0;background:rgba(9,30,23,.46);backdrop-filter:blur(3px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;animation:fade .18s ease}
+.modal{background:var(--paper-2);border:1px solid #D8CDB2;box-shadow:0 30px 70px -30px rgba(8,33,25,.6);max-width:520px;width:100%;animation:rise .22s cubic-bezier(.2,.7,.2,1);position:relative}
+.modal::before{content:"";position:absolute;inset:5px;border:1px solid rgba(181,137,60,.26);pointer-events:none}
+.modal-head{padding:18px 22px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-family:var(--serif);font-size:17px;letter-spacing:.06em;font-weight:600}
+.modal-body{padding:18px 22px}
+.modal-foot{padding:14px 22px 18px;display:flex;justify-content:flex-end;gap:9px;border-top:1px solid var(--line-2)}
+.modal .close{border:none;background:none;color:var(--ink-3);font-size:18px;line-height:1;padding:4px}
+.modal-text{font-size:11.5px;color:var(--ink-2);line-height:1.9}
+.modal-text b{color:var(--ink)}
+.warn-line{font-size:10.5px;color:#8C5C13;background:var(--amber-soft);border-left:2px solid #C9A25B;padding:9px 11px;margin-top:12px;line-height:1.7}
+.seal-stamp{position:absolute;right:24px;bottom:18px;width:92px;height:92px;border:2px solid rgba(162,63,43,.62);border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(162,63,43,.68);font-family:var(--serif);font-size:8.5px;line-height:1.35;letter-spacing:.1em;transform:rotate(-13deg);animation:stamp .4s cubic-bezier(.2,.9,.3,1.2);opacity:.9}
+.toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);background:#0D3126;color:#F2ECDC;border:1px solid rgba(217,189,132,.4);padding:11px 18px;font-size:11.5px;letter-spacing:.04em;z-index:200;box-shadow:0 18px 40px -18px rgba(8,33,25,.6);display:flex;align-items:center;gap:9px;animation:rise .2s ease}
+.toast i{width:6px;height:6px;border-radius:50%;background:var(--gold-2)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes stamp{from{opacity:0;transform:rotate(-13deg) scale(1.5)}to{opacity:.9;transform:rotate(-13deg) scale(1)}}
+
+/* ---------- 杂项 ---------- */
+.note-mini{font-size:9.5px;color:var(--ink-3);line-height:1.7}
+.check-list{display:flex;flex-direction:column;gap:0}
+.check-row{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px dotted #E6DFCE;font-size:11px;line-height:1.7}
+.check-row:last-child{border-bottom:none}
+.check-row .ok{width:14px;height:14px;border-radius:50%;background:#E4EEE6;border:1px solid #C9DBCD;color:#1B6249;display:flex;align-items:center;justify-content:center;font-size:8px;flex:0 0 auto;margin-top:2px}
+.check-row .warnmark{background:var(--amber-soft);border-color:#E6D2AA;color:#8C5C13}
+.check-row .bad{background:var(--red-soft);border-color:#E3C2B7;color:#8D3323}
+.check-row b{font-weight:500;color:var(--ink-2)}
+.check-row span{color:var(--ink-3);font-size:10px}
+.doc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.doc{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#FBF8EF;padding:9px 10px;font-size:10.5px;cursor:pointer;transition:.16s}
+.doc:hover{border-color:var(--gold);background:#FCFAF3}
+.doc .ic{width:24px;height:28px;border:1px solid #D8CFB9;background:#F3EDDC;display:flex;align-items:center;justify-content:center;font-size:7px;color:#8A7139;letter-spacing:.05em;flex:0 0 auto}
+.doc small{display:block;color:var(--ink-3);font-size:8.5px;margin-top:2px}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1280px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .kpi:first-child{grid-column:span 1}
+  .factor-row{grid-template-columns:1.2fr .6fr .9fr 50px}
+}
+@media (max-width:1100px){
+  .shell{grid-template-columns:1fr}
+  .rail{position:static;height:auto;flex-direction:row;align-items:center;padding:0 12px;min-height:58px}
+  .rail-brand{padding:10px 14px;border:none;border-right:1px solid rgba(217,189,132,.14)}
+  .rail-org,.rail-foot{display:none}
+  .rail-nav{display:flex;flex-wrap:wrap;gap:2px;padding:6px}
+  .rail-group{display:none}
+  .rail-item{padding:8px 10px;width:auto;font-size:11px}
+  .rail-item .tail{display:none}
+  .client-view{grid-template-columns:1fr;justify-items:center}
+  .journey-left{max-width:100%}
+  .phone-wrap{position:static}
+  .two-col,.two-col-even{grid-template-columns:1fr}
+  .four-col{grid-template-columns:repeat(2,1fr)}
+  .editor-split{grid-template-columns:1fr}
+  .editor-form{border-right:none;border-bottom:1px solid var(--line);max-height:none}
+  .editor-preview{max-height:none}
+  .cover-body{grid-template-columns:1fr;padding-top:30px}
+}
+@media (max-width:720px){
+  .page-title{font-size:24px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .three-col{grid-template-columns:1fr}
+  .cover{padding:26px 20px}
+  .cover-title{font-size:36px}
+  .cover-roles{grid-template-columns:1fr}
+  .cover-facts{flex-wrap:wrap}
+  .cover-foot{flex-direction:column;font-size:9.5px}
+  .cover-foot span{max-width:100%}
+  .phone{width:342px;height:700px}
+  .page-head{flex-direction:column;align-items:flex-start}
+  .factor-row{grid-template-columns:1fr;gap:4px}
+  .factor-row .val{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+</style>
+</head>
+<body>
+  <div id="app" class="app-shell"></div>
+  <script>
+/* 兴农联担 · 演示数据（全部为脱敏造数，不对应真实客户） */
+window.DATA = {
+  meta: {
+    platform: "兴农联担",
+    fullName: "银担协同赋能乡村振兴的智能授信平台",
+    org: "江西农业大学 · 兴农联担项目组",
+    env: "演示环境 · 脱敏数据",
+    period: "试点期 2026.12 — 2027.06",
+    scope: "江西 · 脐橙 / 油茶",
+    docRef: "依据《项目方案（导师意见修订版）》与《平台功能规格与开发计划 V1.0》构建"
+  },
+
+  roles: [
+    { key:"client", idx:"01", name:"客户 H5", en:"BORROWER", desc:"新型农业经营主体。七项填报、一次授权、五步进度，50 万元以下纯线上。", meta:"移动端 · 3 分钟申请" },
+    { key:"bank", idx:"02", name:"银行端", en:"BANK", desc:"客户经理与审批人。进件、画像、测算、报告、审批、放款，每个数字都可点回来源。", meta:"PC Web · 1366 起" },
+    { key:"guarantee", idx:"03", name:"农担端", en:"GUARANTOR", desc:"评审员与保后人员。在保校验、担保评审、出函、保后与分险台账。", meta:"PC Web · 同源不同口径" },
+    { key:"admin", idx:"04", name:"管理后台", en:"ADMIN", desc:"运营与审计。模板、规则、阈值、数据源、权限与留痕，业务会变的不进代码。", meta:"PC Web · 配置即产品" }
+  ],
+
+  apps: [
+    { no:"NX2026120007", subject:"瑞金市橙丰家庭农场", owner:"傅启明", industry:"脐橙", area:120, appAmt:60, suggest:58, completeness:86, stateCode:"S08", state:"并联审批中", tone:"green", manager:"陈旻", updated:"11-20 10:42", term:36, risk:"B", flags:["建议通过"] },
+    { no:"NX2026120003", subject:"遂川县青岭油茶专业合作社", owner:"刘承山", industry:"油茶", area:860, appAmt:200, suggest:188, completeness:78, stateCode:"S10", state:"待担保评审", tone:"amber", manager:"周立", updated:"11-20 09:18", term:60, risk:"B", flags:["附条件"] },
+    { no:"NX2026120011", subject:"于都县葛坳种养大户 张禾", owner:"张禾", industry:"脐橙", area:46, appAmt:28, suggest:26, completeness:91, stateCode:"S05", state:"预授信完成", tone:"blue", manager:"陈旻", updated:"11-20 08:55", term:24, risk:"A", flags:["建议通过"] },
+    { no:"NX2026120009", subject:"会昌县果优柑橘合作社", owner:"曾广平", industry:"脐橙", area:300, appAmt:150, suggest:132, completeness:64, stateCode:"S18", state:"人工复核", tone:"amber", manager:"黄蕾", updated:"11-19 17:26", term:36, risk:"C", flags:["面积冲突 18%"] },
+    { no:"NX2026120005", subject:"临川区菌源家庭农场", owner:"吴水根", industry:"竹荪", area:30, appAmt:15, suggest:0, completeness:52, stateCode:"S06", state:"待补材料", tone:"gray", manager:"周立", updated:"11-19 15:03", term:12, risk:"—", flags:["完整度不足 60%"] },
+    { no:"NX2026110021", subject:"兴国县春山油茶种植基地", owner:"钟春山", industry:"油茶", area:420, appAmt:80, suggest:78, completeness:88, stateCode:"S16", state:"贷后监测中", tone:"green", manager:"黄蕾", updated:"11-18 14:20", term:60, risk:"B", flags:["NDVI 黄色预警"] },
+    { no:"NX2026110014", subject:"宁都县翠微果业有限公司", owner:"李翠微", industry:"脐橙", area:210, appAmt:90, suggest:86, completeness:93, stateCode:"S15", state:"已放款", tone:"green", manager:"陈旻", updated:"11-17 11:08", term:36, risk:"A", flags:["正常"] }
+  ],
+
+  detail: {
+    no:"NX2026120007",
+    subject:"瑞金市橙丰家庭农场",
+    owner:"傅启明",
+    subjectType:"家庭农场",
+    industry:"脐橙",
+    variety:"纽荷尔脐橙",
+    area:120,
+    treeAge:12,
+    orderAmount:62.4,
+    insured:true,
+    purpose:"春管施肥、修枝与果园水肥一体化改造",
+    appAmt:60,
+    term:36,
+    suggest:58,
+    completeness:86,
+    risk:"B",
+    manager:"陈旻",
+    org:"兴业银行南昌分行 · 普惠金融部",
+    stateCode:"S08",
+    state:"并联审批中",
+    createdAt:"2026-11-20 09:06",
+    village:"瑞金市黄柏乡 · 柏坑村",
+    coords:"25.8791°N, 116.0284°E",
+    conflict: [
+      { k:"遥感面积与申报面积", v:"118.6 / 120 亩", diff:"−1.2%", limit:"≤15%", ok:true },
+      { k:"订单金额与流水", v:"62.4 / 58.7 万元", diff:"+6.3%", limit:"≤20%", ok:true },
+      { k:"投保面积与申报面积", v:"110 / 120 亩", diff:"−8.3%", limit:"≤15%", ok:true }
+    ],
+    timeline: [
+      { time:"11-20 09:06", actor:"客户 傅启明", title:"提交申请", desc:"S00 草稿 → S01 已提交，OCR 预填 7 项，身份证 / 地块 / 订单三张照片通过 GPS 与时间水印校验。", cost:"3 分钟" },
+      { time:"11-20 09:06", actor:"规则引擎", title:"模板匹配完成", desc:"S02 模板匹配中 → S03 准入通过。命中「赣南脐橙 · 2026 版」规则包 v1.3，材料清单一次生成 5 项。", cost:"8.4 秒" },
+      { time:"11-20 09:31", actor:"数据网关", title:"画像核验完成", desc:"S04 → S05 预授信完成。四类数据源回传，完整度 86%，三组冲突校验全部在阈值内。", cost:"15 分钟" },
+      { time:"11-20 10:12", actor:"客户经理 陈旻", title:"受理进件", desc:"S07 待受理 → S08 并联审批中。银行与农担同时受理，共享同一份画像快照与节点状态。", cost:"46 分钟" },
+      { time:"11-20 10:42", actor:"系统", title:"并联节点已激活", desc:"银行审批节点办理中；农担在保校验通过，等待担保评审。互认清单命中「模板准入结论」与「额度区间」两条。", cost:"—" }
+    ],
+    materials: [
+      { name:"身份证正反面", type:"影像", status:"已核验", note:"OCR + 四要素一致" },
+      { name:"地块边界与现场照片", type:"影像", status:"已核验", note:"GPS 水印 · 3 块地块" },
+      { name:"果汁集团收购合同", type:"PDF", status:"已核验", note:"订单 62.4 万元" },
+      { name:"政策性农险保单", type:"PDF", status:"已核验", note:"投保面积 110 亩" },
+      { name:"近 12 个月回款流水", type:"文件导入", status:"已核验", note:"流水 58.7 万元" },
+      { name:"果园经营权证明", type:"证照", status:"已核验", note:"流转期至 2039 年" }
+    ],
+    report: [
+      { h:"一、主体与产业概况", p:[
+        "申请人傅启明，瑞金市黄柏乡柏坑村家庭农场主，经营纽荷尔脐橙连片果园 120 亩，树龄 12 年，处于盛果期。果园完成水肥一体化改造，2026 年挂果率约 85%，已投保政策性柑橘种植险，投保面积 110 亩。",
+        "主体经营年限 9 年，近三年销售收入分别为 96.2 万元、104.5 万元、112.8 万元，呈稳步增长。上游农资采购与下游果汁加工企业收购关系稳定，2026 年签订收购合同 62.4 万元。"
+      ], cites:["F-01","F-04","F-07"] },
+      { h:"二、数据核验与交叉比对", p:[
+        "遥感核验面积 118.6 亩，与申报面积偏差 −1.2%，在 15% 阈值内；NDVI 近 12 个月均值 0.71，高于同期县域均值，未发现灾情图斑。订单金额 62.4 万元与近 12 个月回款流水 58.7 万元偏差 +6.3%，在 20% 阈值内。",
+        "投保面积 110 亩与申报面积偏差 −8.3%，属于正常自留风险范围。三组冲突校验均未触发人工复核，画像完整度 86%，高于 60% 预授信阈值。"
+      ], cites:["F-02","F-03","F-09"] },
+      { h:"三、额度测算与结论", p:[
+        "按「赣南脐橙」模板 v1.3 测算：近三年平均销售收入 104.5 万元 × 0.56 = 58.52 万元；亩数 120 × 亩均投入 5,000 元 × 系数 0.98 = 58.80 万元；政策上限 300 万元。三者取最小值为 58.52 万元，向下取整至 58 万元。",
+        "一票否决三项均未命中。系统建议：建议通过，建议额度 58 万元，期限 36 个月。本报告仅作审批参考，终审由银行与农担分别签批。"
+      ], cites:["F-11","F-12","F-15"] }
+    ]
+  },
+
+  profile: [
+    { group:"遥感与地块", items:[
+      { k:"遥感核验面积", v:"118.6 亩", src:{ source:"卫星遥感 · Sentinel-2 L2A", time:"2026-11-18 02:40", auth:"SR-2026-0912", evidence:"地块边界矢量 + 2026-11-18 过境影像", confidence:"高", method:"NDVI 阈值分割 + 地块矢量化，云量 4%" } },
+      { k:"NDVI 近 12 月均值", v:"0.71", src:{ source:"卫星遥感 · Sentinel-2 时序", time:"2026-11-18", auth:"SR-2026-0912", evidence:"12 期 NDVI 时序曲线（2025-11—2026-10）", confidence:"高", method:"月合成，云雨期以 Sentinel-1 雷达补测" } },
+      { k:"灾情图斑", v:"未发现", src:{ source:"遥感灾情识别", time:"2026-11-18", auth:"SR-2026-0912", evidence:"灾情图斑比对图层", confidence:"中", method:"与近三年同期影像差分" } },
+      { k:"地块数量", v:"3 块 · 连片", src:{ source:"客户勾绘 + 遥感套合", time:"2026-11-20 09:06", auth:"SR-2026-0912", evidence:"GeoJSON 3 个多边形", confidence:"高", method:"面积自动计算，异常面积为 0 时阻断提交" } }
+    ]},
+    { group:"订单与回款", items:[
+      { k:"年度订单金额", v:"62.4 万元", src:{ source:"果汁集团收购合同（文件导入）", time:"2026-11-10", auth:"AU-2026-1183", evidence:"合同编号 OR-2026-1120，第 4 页签章", confidence:"中", method:"OCR 结构化 + 人工核验金额与收购主体" } },
+      { k:"近 12 月回款流水", v:"58.7 万元", src:{ source:"行内账户流水适配器", time:"2026-11-20 09:28", auth:"AU-2026-1176", evidence:"流水摘要 12 页，交易对手 8 家", confidence:"高", method:"按主体与时间段拉取，剔除同名关联转账" } },
+      { k:"订单覆盖率", v:"82%", src:{ source:"系统计算（订单 ÷ 年销售）", time:"2026-11-20 09:30", auth:"—", evidence:"引用 F-05 与 F-07", confidence:"中", method:"订单金额 ÷ 近 12 月销售收入" } },
+      { k:"回款稳定性", v:"11 / 12 个月准时", src:{ source:"系统计算（流水）", time:"2026-11-20 09:30", auth:"AU-2026-1176", evidence:"月度回款时序", confidence:"高", method:"到账日偏离合同账期 >15 天记为延迟" } }
+    ]},
+    { group:"经营与财务", items:[
+      { k:"近三年销售收入", v:"96.2 / 104.5 / 112.8 万元", src:{ source:"行内流水 + 纳税申报", time:"2026-11-20", auth:"AU-2026-1176", evidence:"年度汇总表 3 页", confidence:"高", method:"流水与申报交叉校验，取较低值" } },
+      { k:"近三年平均销售收入", v:"104.5 万元", src:{ source:"系统计算", time:"2026-11-20 09:30", auth:"—", evidence:"引用 F-08", confidence:"高", method:"三年算术平均，向下取整到千元" } },
+      { k:"亩均投入", v:"5,000 元 / 亩", src:{ source:"产业研究 · 脐橙成本口径", time:"2026-10-30", auth:"产业参数 PP-2026-03", evidence:"成本调研表（32 户样本）", confidence:"中", method:"仅作成本上限校验，不作为还款来源" } },
+      { k:"日均存款", v:"3.2 万元", src:{ source:"行内账户流水适配器", time:"2026-11-20", auth:"AU-2026-1176", evidence:"90 日日均余额", confidence:"高", method:"剔除以贷转存与临时大额进出" } }
+    ]},
+    { group:"保险与征信", items:[
+      { k:"投保面积", v:"110 亩", src:{ source:"政策性农险保单（文件导入）", time:"2026-11-12", auth:"AU-2026-1180", evidence:"保单号 PICC-2026-88231", confidence:"高", method:"保单 OCR，与申报面积偏差 8.3%" } },
+      { k:"涉农保险状态", v:"有效 · 至 2027-10", src:{ source:"保险公司接口（二期）", time:"2026-11-12", auth:"AU-2026-1180", evidence:"电子保单 PDF", confidence:"高", method:"本期以文件导入 + 人工核验为主" } },
+      { k:"征信查询结论", v:"无逾期 · 查询 6 次 / 年", src:{ source:"兴业银行征信通道（授信主体查询）", time:"2026-11-20 09:22", auth:"CR-2026-0451", evidence:"征信摘要编号 CR-2026-0451", confidence:"高", method:"平台不直连征信，仅存授权号与结果摘要" } },
+      { k:"对外担保 / 未结诉讼", v:"无", src:{ source:"司法公开信息 + 客户声明", time:"2026-11-19", auth:"AU-2026-1183", evidence:"查询截图 2 页", confidence:"中", method:"关键词检索 + 人工复核" } }
+    ]},
+    { group:"价格与气象", items:[
+      { k:"产地地头价", v:"3.6 元 / 斤", src:{ source:"赣南脐橙产地价格指数", time:"2026-11-19 18:00", auth:"AU-2026-1183", evidence:"价格曲线 · 近 36 个月", confidence:"中", method:"批发价与地头价双口径，取产地均价" } },
+      { k:"成本线", v:"2.9 元 / 斤", src:{ source:"产业研究 · 脐橙成本口径", time:"2026-10-30", auth:"产业参数 PP-2026-03", evidence:"成本调研表（32 户样本）", confidence:"中", method:"物化投入 + 人工 + 地租，不含自有用工" } },
+      { k:"近 12 月降水", v:"1,284 mm · 正常", src:{ source:"气象公开 API · 赣州站", time:"2026-11-20 06:00", auth:"—", evidence:"逐日降水序列", confidence:"高", method:"站点观测，缺失值线性插补" } },
+      { k:"灾害预警", v:"无 · 未来 7 天多云", src:{ source:"气象灾害预警 API", time:"2026-11-20 08:00", auth:"—", evidence:"预警快照", confidence:"高", method:"县级预警信号，橙色以上触发工单" } }
+    ]},
+    { group:"司法与舆情", items:[
+      { k:"涉诉记录", v:"无", src:{ source:"司法公开信息", time:"2026-11-19", auth:"AU-2026-1183", evidence:"查询截图 · 主体全称检索", confidence:"中", method:"关键词检索 + 人工复核" } },
+      { k:"失信 / 被执行", v:"无", src:{ source:"失信被执行人公开查询", time:"2026-11-19", auth:"AU-2026-1183", evidence:"查询截图", confidence:"高", method:"按统一社会信用代码精确检索" } },
+      { k:"行政处罚", v:"无", src:{ source:"信用中国 · 行政处罚公示", time:"2026-11-19", auth:"AU-2026-1183", evidence:"查询截图", confidence:"中", method:"近 3 年，按主体名称与法人检索" } },
+      { k:"负面舆情", v:"无有效信息", src:{ source:"公开舆情检索", time:"2026-11-19", auth:"—", evidence:"检索结果摘要", confidence:"低", method:"仅作提示，不单独构成否决依据" } }
+    ]}
+  ],
+
+  factors: [
+    { name:"近三年平均销售收入 × 0.56", note:"可验证现金流，权重最高", value:"58.52 万元", weight:45, dir:"支撑" },
+    { name:"种植面积 × 亩均投入 × 系数", note:"120 亩 × 5,000 元 × 0.98", value:"58.80 万元", weight:25, dir:"上限" },
+    { name:"订单覆盖率", note:"订单 62.4 万 ÷ 销售 112.8 万", value:"82%", weight:20, dir:"支撑" },
+    { name:"历史回款稳定性", note:"12 个月中 11 个月准时", value:"91.7%", weight:10, dir:"支撑" },
+    { name:"政策上限", note:"本期试点政策性上限", value:"300 万元", weight:0, dir:"不约束" }
+  ],
+
+  coefBase: 0.72,
+  coefItems: [
+    { key:"age", label:"树龄 ≥ 10 年", add:0.06, on:true },
+    { key:"fruit", label:"挂果率 ≥ 80%", add:0.06, on:true },
+    { key:"water", label:"水肥一体化", add:0.08, on:true },
+    { key:"insured", label:"已投保政策性农险", add:0.06, on:true }
+  ],
+
+  bank: {
+    kpis: [
+      { label:"在途进件", value:"34", unit:"笔", foot:"较上周 +6", spark:"up" },
+      { label:"待受理", value:"5", unit:"笔", foot:"其中超时 1 笔", spark:"down" },
+      { label:"今日投放", value:"320", unit:"万元", foot:"3 笔 · 受托支付", spark:"up" },
+      { label:"平均时效", value:"1.4", unit:"天", foot:"目标 ≤ 2 个工作日", spark:"up" }
+    ],
+    todos: [
+      { no:"NX2026120007", name:"瑞金市橙丰家庭农场", tag:"待受理", amt:"60 万元", meta:"脐橙 · 120 亩 · 完整度 86%", deadline:"剩余 2 小时 18 分", hot:false },
+      { no:"NX2026120009", name:"会昌县果优柑橘合作社", tag:"人工复核", amt:"150 万元", meta:"面积冲突 18%，超 15% 阈值", deadline:"剩余 4 小时", hot:true },
+      { no:"NX2026120003", name:"遂川县青岭油茶专业合作社", tag:"并联审批", amt:"200 万元", meta:"农担待担保评审 · 已互认 2 条", deadline:"今日 18:00 前", hot:false },
+      { no:"NX2026120011", name:"于都县葛坳种养大户 张禾", tag:"预授信", amt:"28 万元", meta:"纯线上 · 建议额度 26 万元", deadline:"今日 17:30 前", hot:false },
+      { no:"NX2026120005", name:"临川区菌源家庭农场", tag:"待补件", amt:"15 万元", meta:"完整度 52%，缺订单与保单", deadline:"客户补件中", hot:false }
+    ],
+    week: [
+      { d:"周五", v:8 }, { d:"周六", v:3 }, { d:"周日", v:2 }, { d:"周一", v:11 },
+      { d:"周二", v:9 }, { d:"周三", v:13 }, { d:"今日", v:12, today:true }
+    ],
+    industryMix: [
+      { name:"脐橙", pct:46 }, { name:"油茶", pct:31 }, { name:"竹荪", pct:9 }, { name:"其他", pct:14 }
+    ],
+    kpiChart: { pass:"68%", avgDays:"1.4", timeout:"1" }
+  },
+
+  guarantee: {
+    kpis: [
+      { label:"在保余额", value:"8,640", unit:"万元", foot:"较上月 +312 万元" },
+      { label:"政策性业务占比", value:"76%", unit:"", foot:"监管要求 ≥ 70%" },
+      { label:"单产业集中度", value:"23.4%", unit:"", foot:"脐橙 · 上限 25%" },
+      { label:"待评审 / 待出函", value:"3 / 1", unit:"笔", foot:"今日到期 2 笔" }
+    ],
+    checks: [
+      { name:"单户在保余额上限", value:"当前最高 180 万元 / 上限 1,000 万元", ok:true },
+      { name:"政策业务占比", value:"10—300 万元业务占比 76% / 下限 70%", ok:true },
+      { name:"单产业集中度", value:"脐橙 23.4% / 上限 25%，新增 60 万元后 24.1%", ok:true, warn:true },
+      { name:"同一主体重复担保", value:"未检测到重复担保", ok:true },
+      { name:"反担保充足性", value:"经营权 + 订单 + 保险，覆盖率 1.42 倍", ok:true }
+    ],
+    mix: [
+      { name:"脐橙", amount:"2,024 万元", pct:23.4 },
+      { name:"油茶", amount:"1,382 万元", pct:16.0 },
+      { name:"水产", amount:"1,120 万元", pct:13.0 },
+      { name:"中药材", amount:"860 万元", pct:10.0 },
+      { name:"其他", amount:"3,164 万元", pct:36.6 }
+    ],
+    reviews: [
+      { no:"NX2026120003", name:"遂川县青岭油茶专业合作社", amt:"200 万", suggest:"188 万", term:"60 个月", risk:"B", status:"待评审" },
+      { no:"NX2026120007", name:"瑞金市橙丰家庭农场", amt:"60 万", suggest:"58 万", term:"36 个月", risk:"B", status:"待评审" },
+      { no:"NX2026120009", name:"会昌县果优柑橘合作社", amt:"150 万", suggest:"132 万", term:"36 个月", risk:"C", status:"人工复核" }
+    ],
+    postloan: [
+      { no:"NX2026110021", name:"兴国县春山油茶", alert:"NDVI 连续两月低于同期 15%", level:"黄色", deadline:"48 小时", status:"核查中" },
+      { no:"NX2026100008", name:"宁都县石上脐橙合作社", alert:"连续两期回款延迟", level:"红色", deadline:"24 小时", status:"已升级" },
+      { no:"NX2026090016", name:"遂川县丰林油茶", alert:"保单到期前 30 天未续保", level:"黄色", deadline:"到期前", status:"待通知" }
+    ],
+    reviewTarget: {
+      no:"NX2026120003",
+      subject:"遂川县青岭油茶专业合作社",
+      owner:"刘承山",
+      area:860,
+      appAmt:200,
+      suggest:188,
+      term:60,
+      rate:"0.8%",
+      risk:"B",
+      completeness:78,
+      history:"在保余额 96 万元 · 近三年无代偿 · 2025 年改造后出油率 28%"
+    }
+  },
+
+  admin: {
+    templates: [
+      { name:"赣南脐橙 · 2026 版", industry:"脐橙", ver:"v1.3", status:"生效中", meta:"准入 9 条 · 否决 3 项 · 预警 3 项", active:true },
+      { name:"遂川油茶 · 2026 版", industry:"油茶", ver:"v1.1", status:"生效中", meta:"准入 11 条 · 否决 2 项 · 预警 4 项" },
+      { name:"临川竹荪 · 草案", industry:"竹荪", ver:"v0.4", status:"配置中", meta:"只保留配置能力，不参与本期投放" }
+    ],
+    versions: [
+      { ver:"v1.3", scene:"脐橙 · 全量", scope:"机构：南昌分行 / 产业：脐橙", gray:"100%", status:"已生效", date:"2026-11-12", by:"风控建模 · 徐岚" },
+      { ver:"v1.4", scene:"脐橙 · 灰度", scope:"机构：南昌分行 / 金额段：≤ 100 万元", gray:"20%", status:"灰度观察", date:"2026-11-18", by:"风控建模 · 徐岚" },
+      { ver:"v1.1", scene:"油茶 · 全量", scope:"机构：南昌分行 / 产业：油茶", gray:"100%", status:"已生效", date:"2026-10-28", by:"产业研究 · 罗青" },
+      { ver:"v0.4", scene:"竹荪 · 草案", scope:"未发布", gray:"0%", status:"草案", date:"2026-11-06", by:"产业研究 · 罗青" }
+    ],
+    sources: [
+      { name:"行内账户流水", type:"行内接口", status:"已接入", sla:"180 ms", success:"99.2%", note:"按主体与时间段拉取" },
+      { name:"征信查询（行内通道）", type:"行内接口", status:"已接入", sla:"1.2 s", success:"100%", note:"只存授权号与结果摘要" },
+      { name:"遥感影像（Sentinel-2）", type:"外部 API", status:"已接入", sla:"异步", success:"96.4%", note:"云雨期以 Sentinel-1 补测" },
+      { name:"收购订单", type:"文件导入", status:"已接入", sla:"人工", success:"92.1%", note:"OCR + 人工核验金额" },
+      { name:"政策性农险保单", type:"文件导入", status:"已接入", sla:"人工", success:"94.0%", note:"二期改为保险公司接口" },
+      { name:"气象与灾害预警", type:"公开 API", status:"已接入", sla:"600 ms", success:"98.7%", note:"预警数据中断时标注" },
+      { name:"产地价格指数", type:"公开 API", status:"已接入", sla:"1.4 s", success:"97.3%", note:"批发价 + 地头价双口径" },
+      { name:"司法与舆情", type:"公开查询", status:"已接入", sla:"2.0 s", success:"95.8%", note:"新增涉诉阻断新增授信" },
+      { name:"土地确权", type:"政府接口", status:"二期", sla:"—", success:"—", note:"依赖政府协调与接口改造" },
+      { name:"财政补贴", type:"政府接口", status:"二期", sla:"—", success:"—", note:"二期" },
+      { name:"用电用水", type:"政府 / 企业", status:"二期", sla:"—", success:"—", note:"二期" },
+      { name:"核心企业结算单", type:"企业接口", status:"协议待签", sla:"—", success:"—", note:"一期以文件导入兜底" }
+    ],
+    audits: [
+      { time:"2026-11-20 10:42:18", actor:"陈旻（B1）", action:"查询画像", object:"NX2026120007 · 遥感 / 订单字段", ip:"10.24.8.61", result:"允许", level:"L3" },
+      { time:"2026-11-20 10:31:05", actor:"陈旻（B1）", action:"导出报告", object:"NX2026120007 尽调报告 PDF", ip:"10.24.8.61", result:"已加水印", level:"L3" },
+      { time:"2026-11-20 10:12:44", actor:"陈旻（B1）", action:"受理进件", object:"NX2026120007 · S07 → S08", ip:"10.24.8.61", result:"成功", level:"L2" },
+      { time:"2026-11-20 09:58:12", actor:"徐岚（A1）", action:"修改规则", object:"脐橙模板 v1.4 · 系数区间 0.6—1.2", ip:"10.24.9.12", result:"待审批", level:"L2" },
+      { time:"2026-11-20 09:31:20", actor:"系统", action:"画像生成", object:"NX2026120007 · 完整度 86%", ip:"—", result:"成功", level:"L3" },
+      { time:"2026-11-19 17:26:33", actor:"黄蕾（B1）", action:"转人工复核", object:"NX2026120009 · 面积冲突", ip:"10.24.8.77", result:"成功", level:"L3" },
+      { time:"2026-11-19 16:04:51", actor:"审计员 王珂（A2）", action:"查询审计日志", object:"2026-11-19 全量操作", ip:"10.24.10.3", result:"只读", level:"L2" },
+      { time:"2026-11-19 14:12:09", actor:"系统", action:"拒绝访问", object:"越权尝试：客户角色读取征信字段", ip:"10.24.12.44", result:"已拒绝并留痕", level:"L4" }
+    ],
+    trial: {
+      sales:104.5, area:120, perMu:5000, cap:300,
+      samples: [
+        { name:"瑞金橙丰 · 脐橙", sales:104.5, area:120, perMu:5000 },
+        { name:"遂川青岭 · 油茶", sales:336, area:860, perMu:3800 },
+        { name:"于都张禾 · 脐橙", sales:46, area:46, perMu:4200 }
+      ],
+      vetoes: [
+        { key:"pest", label:"黄龙病疫区未隔离", on:false },
+        { key:"loss", label:"连续两年亏损", on:false },
+        { key:"law", label:"存在未结诉讼", on:false }
+      ]
+    }
+  }
+};
+
+</script>
+  <script>
+/* 兴农联担 · 原型交互 */
+(() => {
+  const D = window.DATA;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+  const nf = n => Number(n).toLocaleString("zh-CN");
+
+  const ICON = {
+    home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"/></svg>',
+    pool:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 10h18M8 5v14"/></svg>',
+    file:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg>',
+    shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 20 6v6c0 4.5-3.2 7.6-8 9-4.8-1.4-8-4.5-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+    chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 20V4M4 20h16M8 16v-5M12 16V7M16 16v-8"/></svg>',
+    layer:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5M3 17l9 5 9-5"/></svg>',
+    gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2 2-1.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1-1.5V17a1.7 1.7 0 0 0-1.7-1.7H7a1.7 1.7 0 0 0-1.7 1.7v.1a1.7 1.7 0 0 0-1 1.5 1.7 1.7 0 0 0-1.9.3l-.1.1-2-2 .1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3.5A1.7 1.7 0 0 0 1.8-1.7V7a1.7 1.7 0 0 0-1.8-1.7h-.1a1.7 1.7 0 0 0-1.5 1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2-2 .1.1a1.7 1.7 0 0 0 1.9.3H5a1.7 1.7 0 0 0 1.7 1.5v.1A1.7 1.7 0 0 0 7 1.7h.1a1.7 1.7 0 0 0 1.7-1.7v-.1a1.7 1.7 0 0 0 1-1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 2 2-.1.1a1.7 1.7 0 0 0-.3 1.9V7a1.7 1.7 0 0 0 1.5 1h.1a1.7 1.7 0 0 0 1.5-1"/></svg>',
+    user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c.8-3.6 3.4-5.4 7-5.4s6.2 1.8 7 5.4"/></svg>',
+    arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg>',
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m5 12 5 5L19 7"/></svg>',
+    clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 2"/></svg>',
+    alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 4 3 20h18z"/><path d="M12 10v4M12 17.5v.1"/></svg>',
+    doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>',
+    msg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+    bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>',
+    grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>'
+  };
+  const icon = k => ICON[k] || "";
+
+  const S = {
+    role: null, view: "cover", tab: "overview",
+    field: "遥感核验面积", jstep: 0,
+    poolIndustry: "全部", poolQuery: "",
+    coefOn: { age:true, fruit:true, water:true, insured:true },
+    adjust: null, modal: null, toast: null, toastTimer: null,
+    tplIdx: 0,
+    tpl: { sales:104.5, area:120, perMu:5000, coef:0.98, cap:300,
+           veto:{ pest:false, loss:false, law:false }, warn:{ ndvi:true, price:true, delay:true } },
+    gray: 20
+  };
+
+  const roleLabel = k => ({ client:"客户 H5", bank:"银行端", guarantee:"农担端", admin:"管理后台" }[k] || "");
+  const navs = {
+    bank: [
+      { group:"业务办理", items:[
+        { v:"bank-home", label:"工作台", icon:"home" },
+        { v:"bank-pool", label:"进件任务池", icon:"pool", tail:"34" },
+        { v:"bank-detail", label:"申请详情", icon:"file" }
+      ]}
+    ],
+    guarantee: [
+      { group:"担保业务", items:[
+        { v:"g-home", label:"工作台", icon:"home" },
+        { v:"g-review", label:"担保评审", icon:"shield", tail:"3" }
+      ]}
+    ],
+    admin: [
+      { group:"配置与治理", items:[
+        { v:"admin-tpl", label:"产业模板", icon:"layer" },
+        { v:"admin-rules", label:"规则与灰度", icon:"gear" },
+        { v:"admin-source", label:"数据源目录", icon:"grid" },
+        { v:"admin-audit", label:"审计日志", icon:"shield" }
+      ]}
+    ],
+    client: [{ group:"客户体验", items:[ { v:"client", label:"五步旅程", icon:"home" } ] }]
+  };
+  const viewLabel = {
+    "bank-home":"工作台", "bank-pool":"进件任务池", "bank-detail":"申请详情",
+    "g-home":"工作台", "g-review":"担保评审",
+    "admin-tpl":"产业模板", "admin-rules":"规则与灰度", "admin-source":"数据源目录", "admin-audit":"审计日志",
+    "client":"客户旅程"
+  };
+
+  /* ---------- 计算 ---------- */
+  function coefValue(){
+    return D.coefBase + D.coefItems.reduce((a,i)=> a + (S.coefOn[i.key] ? i.add : 0), 0);
+  }
+  function limitCalc(){
+    const sales = 104.5 * 0.56;
+    const cost = 120 * 5000 * coefValue() / 10000; // 万元
+    const policy = 300;
+    const min = Math.min(sales, cost, policy);
+    return { sales, cost, policy, min, suggest: Math.floor(min) };
+  }
+  function tplCalc(sample){
+    const c = Math.min(sample.sales * 0.56, sample.area * sample.perMu * S.tpl.coef / 10000, S.tpl.cap);
+    return Math.floor(c);
+  }
+
+  /* ---------- 公共片段 ---------- */
+  const spark = (up=true) => `<svg class="kpi-spark" viewBox="0 0 66 26" fill="none">
+    <path d="${up ? "M2 22 14 18 24 20 34 13 44 15 54 7 64 4" : "M2 6 12 9 22 8 32 15 42 13 52 19 64 21"}"
+      stroke="${up ? "#2E8666" : "#A23F2B"}" stroke-width="1.2" opacity=".85"/>
+    <path d="${up ? "M2 22 14 18 24 20 34 13 44 15 54 7 64 4V26H2z" : "M2 6 12 9 22 8 32 15 42 13 52 19 64 21V26H2z"}"
+      fill="${up ? "rgba(46,134,102,.10)" : "rgba(162,63,43,.08)"}"/></svg>`;
+
+  const statusPill = (app) => `<span class="pill pill-${app.tone}"><i></i>${esc(app.state)}</span>`;
+
+  const kpiCard = (k, i) => `
+    <div class="kpi ${i===0 ? "dark" : ""}">
+      <div class="kpi-label">${esc(k.label)}</div>
+      <div class="kpi-value">${esc(k.value)}<small>${esc(k.unit)}</small></div>
+      <div class="kpi-foot"><span>${esc(k.foot)}</span></div>
+      ${spark(k.label==="待受理" ? false : true)}
+    </div>`;
+
+  const meter = (pct, cls="") => `<span class="meter ${cls}" title="${pct}%"><span style="--w:${pct}%"></span></span>`;
+
+  /* ---------- COVER ---------- */
+  function renderCover(){
+    return `
+    <section class="cover">
+      <svg class="hero-lines" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g fill="none" stroke="#D9BD84" stroke-width="1">
+          <path d="M-40 740C180 640 360 800 560 720S900 600 1120 700 1480 620"/>
+          <path d="M-40 700C190 590 370 760 580 675S910 560 1130 660 1480 570"/>
+          <path d="M-40 660C200 540 390 715 600 630S920 520 1150 615 1480 520"/>
+          <path d="M-40 618C210 490 410 668 620 585S930 480 1170 570 1480 470"/>
+          <path d="M-40 575C220 440 430 620 640 540S940 445 1190 525 1480 420"/>
+          <path d="M-40 530C230 390 450 575 660 495S950 408 1210 480 1480 370"/>
+          <circle cx="1090" cy="250" r="210"/><circle cx="1090" cy="250" r="168"/><circle cx="1090" cy="250" r="126"/>
+        </g>
+      </svg>
+      <header class="cover-head">
+        <div class="brand-lock">
+          <div class="seal"><span>兴</span><span>农</span><span>联</span><span>担</span></div>
+          <div><div class="cn">兴农联担</div><div class="en">Agri · Bank · Guarantee</div></div>
+        </div>
+        <div class="cover-tag">${esc(D.meta.period)} · ${esc(D.meta.scope)}</div>
+      </header>
+
+      <div class="cover-body">
+        <div class="cover-copy">
+          <div class="cover-kicker">银担协同 · 智能授信生产线</div>
+          <h1 class="cover-title">把老师傅的判断，<br>写成<em>可执行的规则</em>。</h1>
+          <p class="cover-lead">一份可解释的产业画像，一个可复核的授信额度，一份可追溯的尽调报告。
+          银行与农担在同一流程里并联作业，<strong>不改变审批责任，只去掉重复劳动</strong>。</p>
+          <div class="cover-facts">
+            <div class="cover-fact"><b>3 分钟</b><small>客户填报</small></div>
+            <div class="cover-fact"><b>15 分钟</b><small>预授信</small></div>
+            <div class="cover-fact"><b>1—2 天</b><small>50 万以下放款</small></div>
+            <div class="cover-fact"><b>86%</b><small>本文演示完整度</small></div>
+          </div>
+        </div>
+
+        <div class="cover-roles">
+          ${D.roles.map(r => `
+            <button class="role-card" data-role="${r.key}">
+              <div class="idx">${r.idx} / ${r.en}</div>
+              <h3>${esc(r.name)}</h3>
+              <p>${esc(r.desc)}</p>
+              <div class="go"><span>${esc(r.meta)}</span><i></i></div>
+            </button>`).join("")}
+        </div>
+      </div>
+
+      <footer class="cover-foot">
+        <span>${esc(D.meta.docRef)}。页面数据均为脱敏造数，不构成真实授信承诺。</span>
+        <span>${esc(D.meta.org)}</span>
+      </footer>
+    </section>`;
+  }
+
+  /* ---------- SHELL ---------- */
+  function renderShell(content){
+    const nav = navs[S.role] || [];
+    const current = S.view === "bank-detail" ? "bank-detail" : S.view;
+    return `<div class="shell">
+      <aside class="rail">
+        <div class="rail-brand">
+          <div class="brand-lock">
+            <div class="seal"><span>兴</span><span>农</span><span>联</span><span>担</span></div>
+            <div><div class="cn">兴农联担</div><div class="en">Agri · Bank · Guarantee</div></div>
+          </div>
+        </div>
+        <div class="rail-org">${esc(D.meta.org)}</div>
+        <nav class="rail-nav">
+          ${nav.map(g => `
+            <div class="rail-group">${esc(g.group)}</div>
+            ${g.items.map(it => `
+              <button class="rail-item ${current===it.v ? "active":""}" data-nav="${it.v}">
+                ${icon(it.icon)}<span>${esc(it.label)}</span>${it.tail ? `<span class="tail">${it.tail}</span>`:""}
+              </button>`).join("")}
+          `).join("")}
+        </nav>
+        <div class="rail-foot">
+          <b>试点期</b>
+          2026.12 — 2027.06<br>江西 · 脐橙 / 油茶
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div class="crumb">
+            <span>兴农联担</span><span>/</span><b>${esc(roleLabel(S.role))}</b><span>/</span><span>${esc(viewLabel[S.view] || "")}</span>
+          </div>
+          <div class="topbar-right">
+            <span class="demo-tag"><i></i>${esc(D.meta.env)}</span>
+            <span class="role-pill">${icon("user")}${esc(roleLabel(S.role))}</span>
+            <button class="switch-role" data-action="switch-role">切换角色</button>
+          </div>
+        </header>
+        ${content}
+      </main>
+    </div>`;
+  }
+
+  /* ---------- BANK HOME ---------- */
+  function bankHome(){
+    const todos = D.bank.todos;
+    const max = Math.max(...D.bank.week.map(w=>w.v));
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">银行端 · 普惠金融 · 南昌分行</div>
+          <h1 class="page-title">陈经理，上午好。</h1>
+          <p class="page-sub">2026 年 11 月 20 日 星期五 · 在途 34 笔，今日 5 笔待受理，1 笔接近超时。审批时长不含评审会与例外处理。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-ghost" data-action="toast" data-msg="经营报表已按当前权限生成（演示）">导出报表</button>
+          <button class="btn btn-primary" data-action="toast" data-msg="新建进件入口已打开（演示）">新建进件</button>
+        </div>
+      </div>
+
+      <div class="kpis">${D.bank.kpis.map((k,i)=>kpiCard(k,i)).join("")}</div>
+
+      <div class="two-col" style="margin-top:16px">
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h3>今日待办</h3><span class="hint">按超时风险排序 · 5 项</span></div>
+            <div class="card-body" style="padding-top:6px;padding-bottom:8px">
+              ${todos.map((t,i)=>`
+                <div class="todo-item" ${t.no==="NX2026120007" ? `data-app="${t.no}"` : `data-action="toast" data-msg="演示单据：完整详情请打开 NX2026120007"`}>
+                  <div class="todo-rank">${String(i+1).padStart(2,"0")}</div>
+                  <div class="todo-main">
+                    <b>${esc(t.name)}</b>
+                    <span>${esc(t.no)} · ${esc(t.meta)}<span class="tag ${t.hot?"hot":""}">${esc(t.tag)}</span></span>
+                  </div>
+                  <div class="todo-right"><span class="amt">${esc(t.amt)}</span><small>${esc(t.deadline)}</small></div>
+                </div>`).join("")}
+            </div>
+          </div>
+
+          <div class="card" style="border-left:2px solid var(--red)">
+            <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px">
+              <div style="display:flex;gap:11px;align-items:center">
+                <span style="color:var(--red)">${icon("clock")}</span>
+                <div><div style="font-size:12px;font-weight:500">1 笔受理超时预警 · NX2026120009</div>
+                <div class="note-mini">会昌县果优柑橘合作社 · 已进入 S07 后 5 小时 42 分，阈值 4 小时。超时只提醒，不自动流转。</div></div>
+              </div>
+              <button class="btn btn-danger btn-sm" data-app="NX2026120009">查看</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>进件池 · 待受理预览</h3><button class="btn-text" data-nav="bank-pool">全部 34 笔 →</button></div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th>业务编号 / 主体</th><th>产业</th><th>申请金额</th><th>完整度</th><th>状态</th></tr></thead>
+                <tbody>
+                ${D.apps.slice(0,4).map(a=>`
+                  <tr data-app="${a.no}">
+                    <td><div class="strong">${esc(a.no)}</div><div class="muted">${esc(a.subject)}</div></td>
+                    <td>${esc(a.industry)}</td>
+                    <td class="num">${nf(a.appAmt)} 万元</td>
+                    <td><div style="display:flex;align-items:center;gap:8px">${meter(a.completeness, a.completeness<60?"red":a.completeness<80?"amber":"")}<span class="num">${a.completeness}%</span></div></td>
+                    <td>${statusPill(a)}</td>
+                  </tr>`).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h3>近 7 日进件</h3><span class="hint">笔 · 今日 12</span></div>
+            <div class="card-body">
+              <div class="barchart">
+                ${D.bank.week.map(w=>`<div class="bar"><b>${w.v}</b><i class="${w.today?"today":""}" style="height:${Math.round(w.v/max*100)}%"></i><span>${esc(w.d)}</span></div>`).join("")}
+              </div>
+              <div class="hairline"></div>
+              <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-3)">
+                <span>通过率 <b class="num" style="color:var(--green-700)">68%</b></span>
+                <span>平均时效 <b class="num" style="color:var(--green-700)">1.4 天</b></span>
+                <span>超时 <b class="num" style="color:var(--red)">1</b></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>在途产业结构</h3><span class="hint">按申请金额</span></div>
+            <div class="card-body">
+              <div class="hbars">
+                ${D.bank.industryMix.map((h,i)=>`<div class="hbar"><span>${esc(h.name)}</span><div class="track"><i class="${i===0?"":"gold"}" style="width:${h.pct}%"></i></div><em>${h.pct}%</em></div>`).join("")}
+              </div>
+              <div class="hairline"></div>
+              <div class="note-mini">单产业集中度上限 25%，当前脐橙 46% 为在途占比；在保口径见农担端 23.4%。</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>互认清单 · 今日采信</h3><span class="hint">一期启用前两层</span></div>
+            <div class="card-body" style="padding-top:10px">
+              <div class="check-list">
+                <div class="check-row"><span class="ok">${icon("check")}</span><div><b>模板准入结论 · 8 笔</b><br><span>脐橙 / 油茶模板命中，材料一次采集复用</span></div></div>
+                <div class="check-row"><span class="ok">${icon("check")}</span><div><b>额度区间 · 5 笔</b><br><span>区间内结论互认，超区间自动转人工</span></div></div>
+                <div class="check-row"><span class="warnmark ok">${icon("alert")}</span><div><b>预警信号 · 1 笔待确认</b><br><span>NX2026110021 NDVI 黄色，农担保后核查中</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /* ---------- POOL ---------- */
+  function bankPool(){
+    const list = D.apps.filter(a => (S.poolIndustry==="全部" || a.industry===S.poolIndustry)
+      && (!S.poolQuery || (a.subject+a.no+a.owner).includes(S.poolQuery)));
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">进件任务池 · 34 笔在途</div>
+          <h1 class="page-title">进件任务池 <span class="thin">/ 按风险与时效排序</span></h1>
+          <p class="page-sub">按产业、金额、完整度与状态筛选；认领、分派、转办均留痕。带 <b>演示</b> 标记的单据可进入完整详情。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-ghost" data-action="toast" data-msg="已导出当前筛选结果（演示）">导出列表</button>
+          <button class="btn btn-primary" data-action="toast" data-msg="批量认领需二次确认（演示）">批量认领</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:12px 16px">
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            ${["全部","脐橙","油茶","竹荪"].map(x=>`<button class="chip ${S.poolIndustry===x?"on":""}" data-action="filter-industry" data-ind="${x}">${x}${x==="全部"?` · ${D.apps.length}`:""}</button>`).join("")}
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="input" style="width:220px" id="poolSearch" placeholder="搜索主体 / 编号 / 负责人" value="${esc(S.poolQuery)}" />
+            <button class="btn btn-ghost btn-sm" data-action="search">搜索</button>
+            <button class="btn btn-ghost btn-sm" data-action="reset-pool">重置</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr>
+              <th>业务编号 / 主体</th><th>产业</th><th>面积</th><th>申请金额</th><th>建议额度</th><th>完整度</th><th>状态</th><th>客户经理</th><th>最近更新</th><th>操作</th>
+            </tr></thead>
+            <tbody>
+            ${list.map(a=>`
+              <tr ${a.no==="NX2026120007" ? `data-app="${a.no}"` : `data-action="toast" data-msg="该单据为列表造数；完整演示请打开 NX2026120007"`}>
+                <td><div class="strong">${esc(a.no)} ${a.no==="NX2026120007"?`<span class="tag" style="color:#7C5B1D;border-color:#E1CFA4;background:#F1E5C9">演示</span>`:""}</div><div class="muted">${esc(a.subject)} · ${esc(a.owner)}</div></td>
+                <td>${esc(a.industry)}</td>
+                <td class="num">${nf(a.area)} 亩</td>
+                <td class="num strong">${nf(a.appAmt)} 万</td>
+                <td class="num">${a.suggest?nf(a.suggest)+" 万":"—"}</td>
+                <td><div style="display:flex;align-items:center;gap:8px">${meter(a.completeness, a.completeness<60?"red":a.completeness<80?"amber":"")}<span class="num">${a.completeness}%</span></div></td>
+                <td>${statusPill(a)}</td>
+                <td>${esc(a.manager)}</td>
+                <td class="muted">${esc(a.updated)}</td>
+                <td><button class="btn-text" data-app="${a.no}">查看 →</button></td>
+              </tr>`).join("")}
+            ${list.length===0?`<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--ink-3)">没有符合条件的单据</td></tr>`:""}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="note-mini" style="margin-top:12px">状态码与流转规则见《功能规格》表 7：只允许按表内箭头流转；非法流转返回 5001 并写入事件表；S19 必须由人工复核触发。</p>
+    </div>`;
+  }
+
+  /* ---------- DETAIL ---------- */
+  function detailSummary(){
+    const d = D.detail;
+    return `<div class="card" style="margin-bottom:16px">
+      <div class="card-body" style="display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:16px;padding:18px 20px;align-items:end">
+        <div>
+          <div class="eyebrow" style="color:var(--ink-3)">业务编号 ${esc(d.no)}</div>
+          <h1 class="page-title" style="font-size:25px;margin-top:6px">${esc(d.subject)}</h1>
+          <p class="page-sub" style="margin-top:5px">${esc(d.industry)} · ${esc(d.area)} 亩 · ${esc(d.village)} · 客户经理 ${esc(d.manager)}</p>
+        </div>
+        <div><div class="kpi-label">申请金额</div><div class="kpi-value" style="font-size:24px">${nf(d.appAmt)}<small>万元</small></div></div>
+        <div><div class="kpi-label">建议额度</div><div class="kpi-value" style="font-size:24px;color:var(--green-700)">${nf(d.suggest)}<small>万元</small></div></div>
+        <div><div class="kpi-label">数据完整度</div><div class="kpi-value" style="font-size:24px">${d.completeness}<small>%</small></div><div style="margin-top:6px">${meter(d.completeness,"")}</div></div>
+        <div><div class="kpi-label">当前节点</div><div style="margin-top:8px">${statusPill({tone:"green",state:d.state})}</div><div class="note-mini" style="margin-top:6px">${esc(d.stateCode)} · ${d.stateCode==="S09"?"银行":"银行 / 农担"}</div></div>
+      </div>
+    </div>`;
+  }
+
+  function detailTabs(){
+    const tabs = [
+      ["overview","概览"],
+      ["profile","产业画像"],
+      ["limit","额度测算"],
+      ["report","尽调报告"],
+      ["flow","流程留痕"],
+      ["materials","材料 · 6"]
+    ];
+    return `<div class="tabs" style="margin-bottom:18px">
+      ${tabs.map(([k,l])=>`<button class="tab ${S.tab===k?"active":""}" data-tab="${k}">${l}</button>`).join("")}
+    </div>`;
+  }
+
+  function tabOverview(){
+    const d = D.detail;
+    const info = [
+      ["主体名称", d.subject],["主体类型", d.subjectType],
+      ["法定代表人", d.owner],["经营产业", d.industry+" · "+d.variety],
+      ["申报面积", d.area+" 亩"],["树龄", d.treeAge+" 年"],
+      ["年度订单", d.orderAmount+" 万元"],["政策性农险", d.insured?"已投保":"未投保"],
+      ["申请期限", d.term+" 个月"],["资金用途", d.purpose]
+    ];
+    return `<div class="two-col">
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h3>申请基本信息</h3><span class="hint">提交时锁定 · 2026-11-20 09:06</span></div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 26px">
+              ${info.map(([k,v])=>`<div class="field-row"><span class="k">${esc(k)}</span><span class="v" style="border-bottom:none;cursor:default">${esc(v)}</span></div>`).join("")}
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>三组冲突校验</h3><span class="hint">超阈值标红转人工，不自动否决</span></div>
+          <div class="card-body">
+            ${d.conflict.map(c=>`
+              <div style="padding:10px 0;border-bottom:1px solid var(--line-2)">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+                  <div style="font-size:11.5px">${esc(c.k)}</div>
+                  <span class="pill pill-green"><i></i>在阈值内</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:10.5px;color:var(--ink-3)">
+                  <span class="num">${esc(c.v)} · 偏差 ${esc(c.diff)}</span><span>阈值 ${esc(c.limit)}</span>
+                </div>
+              </div>`).join("")}
+            <div class="note-mini" style="margin-top:12px">遥感面积与申报面积、订单金额与流水、投保面积与申报面积三组校验，初始阈值 15% / 20% / 15%，由风控建模与产业研究在上线前校准。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h3>并联流程</h3><span class="hint">S08 · 10:42</span></div>
+          <div class="card-body">
+            ${progress5(3)}
+            <div class="hairline"></div>
+            <div class="check-list">
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>银行审批节点 · 办理中</b><br><span>客户经理 陈旻 · 建议通过 · 建议额度 58 万元</span></div></div>
+              <div class="check-row"><span class="ok" style="background:var(--amber-soft);border-color:#E6D2AA;color:#8C5C13">${icon("clock")}</span><div><b>农担担保评审 · 待评审</b><br><span>在保校验通过 · 单户余额 96 万元 / 上限 1,000 万元</span></div></div>
+            </div>
+            <div class="warn-line">责任边界：平台不代替任何一方签批。互认只覆盖模板准入、额度区间、预警信号三类结论。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>互认清单命中</h3><span class="hint">版本 MI-2026-11</span></div>
+          <div class="card-body" style="padding-top:8px">
+            <div class="field-row"><span class="k">模板准入结论</span><span class="v" style="border-bottom:none;cursor:default;color:var(--green-700)">已采信 · 脐橙 v1.3</span></div>
+            <div class="field-row"><span class="k">额度区间</span><span class="v" style="border-bottom:none;cursor:default;color:var(--green-700)">已采信 · 52—61 万元</span></div>
+            <div class="field-row"><span class="k">预警信号</span><span class="v" style="border-bottom:none;cursor:default;color:var(--ink-3)">无 · 无需采信</span></div>
+            <div class="note-mini" style="margin-top:10px">互认条目版本化，双方确认后生效，平台留存确认记录。评审会、例外处理不在互认范围。</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function progress5(current){
+    const labels = ["扫码申请","模板匹配","画像核验","并联审批","放款陪伴"];
+    const times = ["09:06","09:06","09:31","10:12","预计 11-22"];
+    return `<div class="flow">
+      ${labels.map((l,i)=>`
+        <div class="flow-step ${i<current?"done":i===current?"current":""}">
+          <div class="flow-dot">${i<current?"✓":String(i+1)}</div>
+          <div class="flow-label">${l}</div>
+          <div class="flow-time">${times[i]}</div>
+        </div>`).join("")}
+    </div>`;
+  }
+
+  function tabProfile(){
+    const all = D.profile.flatMap(g=>g.items);
+    const cur = all.find(x=>x.k===S.field) || all[0];
+    const src = cur.src;
+    return `<div class="two-col">
+      <div class="card">
+        <div class="card-head"><h3>同源画像 · 银行全量视图</h3><span class="hint">点击任一数值查看来源卡片</span></div>
+        <div class="card-body">
+          ${D.profile.map(g=>`
+            <div class="field-group">
+              <h4>${esc(g.group)}</h4>
+              ${g.items.map(it=>`
+                <div class="field-row">
+                  <span class="k">${esc(it.k)}</span>
+                  <span class="v ${it.v.includes("18%")?"warn":""}" data-field="${esc(it.k)}">${esc(it.v)}</span>
+                </div>`).join("")}
+            </div>`).join("")}
+          <div class="note-mini">每个字段五要素：来源、获取时间、授权编号、原始凭证引用、置信度。字段级权限在接口层实现，前端隐藏不作为安全边界。</div>
+        </div>
+      </div>
+
+      <div class="source-card">
+        <div class="source-head"><h3>字段溯源 · ${esc(cur.k)}</h3><span class="conf">置信度 ${esc(src.confidence)}</span></div>
+        <div class="source-list">
+          <div class="source-item"><label>数据来源</label><span>${esc(src.source)}</span></div>
+          <div class="source-item"><label>获取时间</label><span>${esc(src.time)}</span></div>
+          <div class="source-item"><label>授权编号</label><span>${esc(src.auth)}</span></div>
+          <div class="source-item"><label>取值方法</label><span>${esc(src.method)}</span></div>
+          <div class="source-item"><label>原始凭证</label><span>${esc(src.evidence)}</span></div>
+          <div class="source-item"><label>适用角色</label><span>银行 B1 / B2 可见；客户仅见摘要；农担见同源数据、不同口径</span></div>
+        </div>
+        <div class="evidence" data-action="toast" data-msg="凭证预览需二次授权（演示）">
+          <div class="thumb">EVIDENCE</div>
+          <div><b>查看原始凭证</b><small>右侧为缩略占位，真实环境按业务编号归档</small></div>
+        </div>
+        <div class="note-mini" style="margin-top:10px">验收口径：任一额度数字，三次点击内可定位到原始凭证或数据来源。</div>
+        <div class="hairline"></div>
+        <div style="font-size:9.5px;letter-spacing:.12em;color:var(--ink-3);margin-bottom:4px">本笔业务授权链</div>
+        <div class="field-row"><span class="k">征信查询授权</span><span class="v" style="border-bottom:none;cursor:default;color:var(--green-700)">已签署 · CR-2026-0451</span></div>
+        <div class="field-row"><span class="k">数据查询授权</span><span class="v" style="border-bottom:none;cursor:default;color:var(--green-700)">已签署 · AU-2026-1176</span></div>
+        <div class="field-row"><span class="k">隐私政策</span><span class="v" style="border-bottom:none;cursor:default;color:var(--ink-3)">v2.3 · 可撤回</span></div>
+        <div class="note-mini" style="margin-top:8px">撤回授权后停止增量查询；已获取数据按授权文本约定处理，不做默认永久保留。</div>
+        <div class="hairline"></div>
+        <div style="font-size:9.5px;letter-spacing:.12em;color:var(--ink-3);margin-bottom:4px">字段级可见范围 · L3 敏感</div>
+        <div class="field-row"><span class="k">客户视图</span><span class="v" style="border-bottom:none;cursor:default">仅见摘要与进度</span></div>
+        <div class="field-row"><span class="k">银行视图</span><span class="v" style="border-bottom:none;cursor:default">全量画像 · 征信摘要</span></div>
+        <div class="field-row"><span class="k">农担视图</span><span class="v" style="border-bottom:none;cursor:default">同源数据 · 产业口径</span></div>
+        <div class="field-row"><span class="k">导出</span><span class="v" style="border-bottom:none;cursor:default;color:var(--red)">需审批 + 水印</span></div>
+      </div>
+    </div>`;
+  }
+
+  function tabLimit(){
+    const c = coefValue();
+    const r = limitCalc();
+    const adjusted = S.adjust;
+    return `<div class="two-col">
+      <div class="stack">
+        <div class="formula">
+          <div class="label">额度公式 · 赣南脐橙模板 v1.3</div>
+          <div class="expr">额度 = min（ 近三年平均销售收入 × 0.5—0.6 ，<br>&nbsp;&nbsp;&nbsp;亩数 × 亩均投入 × 系数 ， 300 万元 ）</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>系数构成</h3><span class="hint">区间 0.6—1.2 · 当前 ${c.toFixed(2)}</span></div>
+          <div class="card-body">
+            <div class="coef-chips">
+              <span class="chip on" style="background:#F1E5C9;border-color:#E1CFA4;color:#7C5B1D">基础 0.72</span>
+              ${D.coefItems.map(i=>`<button class="chip ${S.coefOn[i.key]?"on":""}" data-action="toggle-coef" data-key="${i.key}">${S.coefOn[i.key]?"✓ ":""}${esc(i.label)} +${i.add.toFixed(2)}</button>`).join("")}
+            </div>
+            <div class="note-mini" style="margin-top:10px">系数按树龄、挂果率、水肥一体化、参保四项加权，区间 0.6—1.2。取消勾选可实时查看额度变化。</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>测算明细</h3><span class="hint">每个因子给出取值、来源与方向</span></div>
+          <div class="card-body">
+            ${D.factors.map((f,i)=>`
+              <div class="factor-row">
+                <div class="fname">${esc(f.name)}<small>${esc(f.note)}</small></div>
+                <div class="factor-bar"><i style="width:${f.weight?f.weight*2:0}%"></i></div>
+                <div class="val">${i===1 ? r.cost.toFixed(2)+" 万元" : esc(f.value)}</div>
+                <div class="dir ${f.dir==="不约束"?"":""}">${f.dir==="不约束"?"—":f.dir}</div>
+              </div>`).join("")}
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">
+              <span style="font-size:10.5px;color:var(--ink-3)">命中公式 · 向下取整至万元 · 规则包版本锁定于提交时</span>
+              <span class="mono" style="font-size:10px;color:var(--ink-3)">formula v1.3 / rule 2026-11-12</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h3>建议额度</h3><span class="hint">三档结论之一：建议通过</span></div>
+          <div class="card-body">
+            <div class="big-amount">${nf(r.suggest)}<small>万元</small></div>
+            <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+              <span class="pill pill-green"><i></i>无否决项</span>
+              <span class="pill pill-gold"><i></i>人工可调</span>
+              <span class="pill pill-blue"><i></i>完整度 ${D.detail.completeness}%</span>
+            </div>
+            <div class="hairline"></div>
+            <div class="check-list">
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>现金流约束 ${r.sales.toFixed(2)} 万元</b><br><span>近三年平均销售收入 104.5 万元 × 0.56</span></div></div>
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>成本上限 ${r.cost.toFixed(2)} 万元</b><br><span>120 亩 × 5,000 元 × ${c.toFixed(2)}</span></div></div>
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>政策上限 300 万元</b><br><span>本期试点 300 万元，政策性上限 1,000 万元不启用</span></div></div>
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>下限 10 万元</b><br><span>低于下限不进入预授信</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>人工调整</h3><span class="hint">必填理由 · 不覆盖原测算值</span></div>
+          <div class="card-body">
+            <div class="adjust-box" style="margin-top:0">
+              <label>调整后额度（万元）</label>
+              <div class="inline-field">
+                <input class="input num" id="adjAmt" type="number" value="${adjusted ? adjusted.amount : r.suggest}" />
+                <span class="unit">万元</span>
+              </div>
+              <label style="margin-top:10px">调整理由</label>
+              <textarea class="input" id="adjReason" placeholder="例：新增水肥一体化投入，订单覆盖率上调">${adjusted ? esc(adjusted.reason) : ""}</textarea>
+              <button class="btn btn-primary btn-sm" style="margin-top:10px" data-action="adjust">确认调整并留痕</button>
+              ${adjusted ? `<div class="warn-line">已记录调整：${nf(adjusted.amount)} 万元（原值 ${nf(r.suggest)} 万元，幅度 ${adjusted.delta>0?"+":""}${adjusted.delta.toFixed(1)}%）${adjusted.over20?" · 超过 20%，已进入复核队列":""}</div>` : ""}
+            </div>
+            <div class="note-mini" style="margin-top:10px">调整幅度超过 20% 自动进入复核队列；原测算值保留，审批页同时展示调整前后。</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function tabReport(){
+    const rep = D.detail.report;
+    return `<div class="card">
+      <div class="card-head">
+        <h3>尽调报告 · 大模型只写文本，不做决策</h3>
+        <div style="display:flex;gap:8px">
+          <span class="pill pill-green" style="align-self:center"><i></i>引用校验 12 / 12</span>
+          <button class="btn btn-ghost btn-sm" data-action="toast" data-msg="报告已重新生成，12 处引用全部绑定字段（演示）">重新生成</button>
+          <button class="btn btn-primary btn-sm" data-action="toast" data-msg="PDF 已生成，含查询水印与业务编号（演示）">导出 PDF</button>
+        </div>
+      </div>
+      <div class="card-body" style="background:var(--paper-3);padding:26px">
+        <div class="report-doc">
+          <h3>授信尽调报告</h3>
+          <div class="meta"><span>业务编号 NX2026120007 · 规则包 v1.3</span><span>生成于 2026-11-20 10:08 · 仅供审批参考</span></div>
+          ${rep.map(sec=>`
+            <div class="sec">${esc(sec.h)}</div>
+            ${sec.p.map(p=>`<p>${esc(p)}${sec.cites.map(c=>`<span class="cite" data-cite="${c}">${c}</span>`).join("")}</p>`).join("")}
+          `).join("")}
+          <div style="margin-top:22px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-family:var(--sans);font-size:9px;color:var(--ink-3);letter-spacing:.04em">
+            <span>报告中的每个数字均绑定结构化字段或原始凭证，未绑定即标红阻断提交</span>
+            <span>第 1 页 / 共 3 页</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function tabFlow(){
+    return `<div class="two-col">
+      <div class="card">
+        <div class="card-head"><h3>流转事件</h3><span class="hint">事件表只增不改 · 5 条</span></div>
+        <div class="card-body">
+          <div class="timeline">
+            ${[...D.detail.timeline].reverse().map(e=>`
+              <div class="event">
+                <div class="etime">${esc(e.time)} · 耗时 ${esc(e.cost)}</div>
+                <div class="etitle">${esc(e.title)}<span>${esc(e.actor)}</span></div>
+                <div class="edesc">${esc(e.desc)}</div>
+              </div>`).join("")}
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h3>状态机 · 当前 S08</h3><span class="hint">非法流转返回 5001</span></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span class="pill pill-green"><i></i>当前 S08 并联审批中</span>
+              <span style="color:var(--ink-3)">允许流转 →</span>
+              <span class="pill pill-gray"><i></i>S09</span>
+              <span class="pill pill-gray"><i></i>S18</span>
+              <span class="pill pill-gray"><i></i>S19</span>
+            </div>
+            <div class="hairline"></div>
+            <div class="check-row"><span class="ok">${icon("check")}</span><div><b>规则只输出三档建议</b><br><span>建议通过 / 建议拒绝 / 人工复核，不得直接把单据置为 S19</span></div></div>
+            <div class="check-row"><span class="ok">${icon("check")}</span><div><b>超时只提醒，不自动流转</b><br><span>进入 S07 后 4 小时未受理、S08 后 1 个工作日未出结论 → 超时看板</span></div></div>
+            <div class="check-row"><span class="ok">${icon("check")}</span><div><b>每次流转写事件记录</b><br><span>操作人、角色、机构、前后状态、意见、耗时、附件</span></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>超时监控</h3></div>
+          <div class="card-body">
+            <div class="field-row"><span class="k">受理时效（S07）</span><span class="v" style="border-bottom:none;cursor:default">阈值 4 小时 · 剩余 2:18</span></div>
+            <div class="field-row"><span class="k">审批时效（S08）</span><span class="v" style="border-bottom:none;cursor:default">阈值 1 个工作日 · 今日 18:00</span></div>
+            <div class="field-row"><span class="k">补件时效（S06）</span><span class="v" style="border-bottom:none;cursor:default">截止 11-21 18:00</span></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function tabMaterials(){
+    return `<div class="card">
+      <div class="card-head"><h3>材料与凭证</h3><span class="hint">一次采集 · 多端复用 · 6 项已核验</span></div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          ${D.detail.materials.map(m=>`
+            <div class="doc" data-action="toast" data-msg="文件预览需按角色判定水印（演示）">
+              <div class="ic">${m.type==="PDF"?"PDF":m.type==="影像"?"IMG":"DOC"}</div>
+              <div><b>${esc(m.name)}</b><small>${esc(m.note)}</small></div>
+              <span class="pill pill-green" style="margin-left:auto"><i></i>${esc(m.status)}</span>
+            </div>`).join("")}
+        </div>
+        <div class="hairline"></div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-3)">
+          <span>文件按业务编号归档；jpg / png / pdf，单张 ≤ 10MB，支持断点续传。</span>
+          <span>病毒扫描 · 已通过</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function bankDetail(){
+    const tabContent = { overview:tabOverview, profile:tabProfile, limit:tabLimit, report:tabReport, flow:tabFlow, materials:tabMaterials }[S.tab] || tabOverview;
+    return `<div class="page">
+      ${detailSummary()}
+      <div class="page-head" style="margin-bottom:14px">
+        <div><div class="eyebrow">申请详情 · 六页签</div><p class="page-sub" style="margin-top:6px">字段可悬浮来源；审批人不同意某个数字时，可逐项核对，而不是只看到一个结论。</p></div>
+        <div class="page-actions">
+          <button class="btn btn-ghost" data-action="toast" data-msg="已生成带查询水印的 PDF（演示）">打印 / 导出</button>
+          <button class="btn btn-danger" data-action="reject">退回补件</button>
+          <button class="btn btn-primary" data-action="approve">审批处理</button>
+        </div>
+      </div>
+      ${detailTabs()}
+      ${tabContent()}
+    </div>`;
+  }
+
+  /* ---------- GUARANTEE ---------- */
+  function gHome(){
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">农担端 · 江西省农业信贷融资担保有限公司</div>
+          <h1 class="page-title">周评审员，待评审 3 笔。</h1>
+          <p class="page-sub">与银行同源数据、不同口径：突出产业景气、区域集中度、代偿历史与反担保充足性；不展示银行定价底线。</p>
+        </div>
+        <div class="page-actions"><button class="btn btn-ghost" data-action="toast" data-msg="保后台账已导出（演示）">导出保后台账</button><button class="btn btn-primary" data-nav="g-review">进入担保评审</button></div>
+      </div>
+      <div class="kpis">${D.guarantee.kpis.map((k,i)=>kpiCard(k,i)).join("")}</div>
+
+      <div class="two-col" style="margin-top:16px">
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h3>待评审</h3><span class="hint">按到期时间排序</span></div>
+            <div class="table-wrap"><table class="table" style="min-width:0">
+              <thead><tr><th>业务编号 / 主体</th><th>申请</th><th>建议</th><th>期限</th><th>风险</th></tr></thead>
+              <tbody>${D.guarantee.reviews.map(r=>`
+                <tr ${r.no==="NX2026120003"?`data-nav="g-review"`:`data-action="toast" data-msg="该单据为列表造数；完整演示请打开 NX2026120003"`}>
+                  <td><div class="strong">${esc(r.no)}</div><div class="muted">${esc(r.name)} <span class="tag" style="color:${r.status==="待评审"?"#8C5C13":"#5F6E65"};border-color:${r.status==="待评审"?"#E6D2AA":"#DCD7C8"};background:${r.status==="待评审"?"#F6EAD3":"#EDEAE0"}">${esc(r.status)}</span></div></td>
+                  <td class="num">${esc(r.amt)}</td><td class="num">${esc(r.suggest)}</td><td>${esc(r.term)}</td><td>${esc(r.risk)}</td>
+                </tr>`).join("")}</tbody>
+            </table></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>在保结构</h3><span class="hint">8,640 万元 · 按产业</span></div>
+            <div class="card-body">
+              ${D.guarantee.mix.map(m=>`<div class="hbar" style="margin-bottom:10px"><span>${esc(m.name)}</span><div class="track"><i style="width:${m.pct*2.6}%"></i></div><em>${m.pct}%</em></div>`).join("")}
+              <div class="note-mini" style="margin-top:10px">脐橙 23.4%，距 25% 集中度上限 1.6 个百分点；新增 60 万元后为 24.1%，仍在上限内。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h3>在保与限额校验</h3><span class="hint">G-02 · 5 项</span></div>
+            <div class="card-body">
+              <div class="check-list">
+                ${D.guarantee.checks.map(c=>`
+                  <div class="check-row"><span class="ok ${c.warn?"warnmark":""}">${c.warn?icon("alert"):icon("check")}</span><div><b>${esc(c.name)}</b><br><span>${esc(c.value)}</span></div></div>`).join("")}
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>主动预警 · 保后</h3><span class="hint">工单化处置</span></div>
+            <div class="card-body" style="padding-top:4px;padding-bottom:6px">
+              ${D.guarantee.postloan.map(p=>`
+                <div class="todo-item" data-action="toast" data-msg="保后工单详情为演示数据">
+                  <div class="todo-main">
+                    <b>${esc(p.name)}</b>
+                    <span>${esc(p.no)} · ${esc(p.alert)}</span>
+                  </div>
+                  <div class="todo-right">
+                    <span class="pill ${p.level==="红色"?"pill-red":"pill-amber"}"><i></i>${esc(p.level)}</span>
+                    <small style="display:block;margin-top:5px">${esc(p.deadline)}</small>
+                  </div>
+                </div>`).join("")}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function gReview(){
+    const t = D.guarantee.reviewTarget;
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">担保评审 · 业务编号 ${esc(t.no)}</div>
+          <h1 class="page-title">${esc(t.subject)} <span class="thin">/ ${esc(t.appAmt)} 万元</span></h1>
+          <p class="page-sub">${esc(t.owner)} · 油茶 ${esc(t.area)} 亩 · 完整度 ${t.completeness}% · 风险等级 ${esc(t.risk)} · 同源画像、农担口径</p>
+        </div>
+        <div class="page-actions"><button class="btn btn-ghost" data-action="toast" data-msg="评审材料已导出（演示）">导出评审材料</button></div>
+      </div>
+
+      <div class="two-col">
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h3>农担口径画像</h3><span class="hint">G-03 · 与银行同源</span></div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 26px">
+                <div class="field-row"><span class="k">在保余额</span><span class="v">96 万元</span></div>
+                <div class="field-row"><span class="k">单户上限</span><span class="v">1,000 万元</span></div>
+                <div class="field-row"><span class="k">产业景气指数</span><span class="v">油茶 103.2 · 平稳</span></div>
+                <div class="field-row"><span class="k">区域集中度</span><span class="v">遂川 18.6% · 可控</span></div>
+                <div class="field-row"><span class="k">近三年代偿</span><span class="v">0 笔</span></div>
+                <div class="field-row"><span class="k">历史出油率</span><span class="v">22% → 28%</span></div>
+                <div class="field-row"><span class="k">反担保方式</span><span class="v">经营权 + 订单 + 保险</span></div>
+                <div class="field-row"><span class="k">覆盖率</span><span class="v">1.42 倍</span></div>
+              </div>
+              <div class="note-mini" style="margin-top:12px">${esc(t.history)}</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>产业与周期判断</h3><span class="hint">农担评审要点</span></div>
+            <div class="card-body">
+              <div class="check-list">
+                <div class="check-row"><span class="ok">${icon("check")}</span><div><b>期限与产业周期匹配</b><br><span>油茶 5 年，与丰产周期对齐；还本计划参数化生成，实际扣款在行内核心系统</span></div></div>
+                <div class="check-row"><span class="ok">${icon("check")}</span><div><b>改造进度可核验</b><br><span>遥感识别低产林改造图斑，2026 年改造完成 720 亩 / 申报 860 亩</span></div></div>
+                <div class="check-row"><span class="ok">${icon("check")}</span><div><b>订单与回款交叉验证</b><br><span>订单 336 万元，近 12 月回款 298 万元，偏差 +12.8%，在 20% 阈值内</span></div></div>
+              </div>
+              <div class="warn-line">单产业集中度 23.4%，新增后 24.1%，接近 25% 上限。建议附条件：放款前完成保单续保确认。</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>分险与代偿</h3><span class="hint">只读 · 不自动调整</span></div>
+            <div class="card-body" style="padding-top:8px">
+              <div class="field-row"><span class="k">银行自担比例</span><span class="v" style="border-bottom:none;cursor:default">20%</span></div>
+              <div class="field-row"><span class="k">农担分险比例</span><span class="v" style="border-bottom:none;cursor:default">80%</span></div>
+              <div class="field-row"><span class="k">财政代偿补偿</span><span class="v" style="border-bottom:none;cursor:default">按政策口径</span></div>
+              <div class="field-row"><span class="k">近三年代偿率</span><span class="v" style="border-bottom:none;cursor:default">0.0%</span></div>
+              <div class="note-mini" style="margin-top:10px">平台只提供季度评议所需数据；分险比例调整仅适用于新发放业务，以补充协议约定，存量合同不变。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h3>评审意见</h3><span class="hint">G-04 · 终审在农担</span></div>
+            <div class="card-body">
+              <div class="coef-chips">
+                <span class="chip on">建议通过</span>
+                <span class="chip">附条件通过</span>
+                <span class="chip">不建议担保</span>
+              </div>
+              <div class="form-grid" style="margin-top:14px">
+                <div><label style="font-size:10px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:6px">建议担保额度</label><div class="inline-field"><input class="input num" value="${t.suggest}" /><span class="unit">万元</span></div></div>
+                <div><label style="font-size:10px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:6px">担保费率</label><div class="inline-field"><input class="input num" value="0.8" /><span class="unit">%</span></div></div>
+              </div>
+              <div style="margin-top:12px"><label style="font-size:10px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:6px">附加条件与评审意见</label>
+              <textarea class="input" rows="4">同意担保 188 万元，期限 60 个月。附加条件：放款前完成政策性农险续保；改造进度按季度以遥感核验；单产业集中度接近上限，本期不再新增同区域油茶业务。</textarea></div>
+              <div class="coef-chips" style="margin-top:12px">
+                <span class="chip on">林地经营权</span><span class="chip on">收购订单</span><span class="chip on">政策性农险</span><span class="chip">第三方保证</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:16px">
+                <button class="btn btn-primary" data-action="letter">出具担保函</button>
+                <button class="btn btn-ghost" data-action="toast" data-msg="评审意见已暂存（演示）">暂存意见</button>
+              </div>
+              <div class="note-mini" style="margin-top:10px">评审会、例外处理仍按双方制度执行；平台只做节点与留痕，不改变审批责任。</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>担保函预览</h3><span class="hint">编号待生成</span></div>
+            <div class="card-body">
+              <div style="border:1px solid var(--line);padding:16px;background:#FFFDF8;position:relative;font-family:var(--serif);font-size:10.5px;line-height:1.9;color:#3A443C">
+                <div style="text-align:center;font-size:13px;letter-spacing:.16em;margin-bottom:10px">担 保 函</div>
+                <div>致：兴业银行南昌分行</div>
+                <div style="margin-top:4px">兹证明，我公司同意为 ${esc(t.subject)} 向贵行申请的 ${esc(t.appAmt)} 万元贷款提供连带责任保证担保，担保金额 ${esc(t.suggest)} 万元，期限 60 个月。</div>
+                <div style="margin-top:6px;font-size:9px;color:var(--ink-3);font-family:var(--sans)">本预览为占位文本，正式担保函由 CA 签章平台出具并以回执归档。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /* ---------- ADMIN ---------- */
+  function adminTpl(){
+    const t = S.tpl;
+    const main = D.admin.trial.samples[0];
+    const res = tplCalc(main);
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">管理后台 · 产业模板 · 配置即产品</div>
+          <h1 class="page-title">产业模板 <span class="thin">/ 换产业改配置，不改代码</span></h1>
+          <p class="page-sub">左表单、右试算。保存前必须通过 3 组样例试算；发布需二次确认并生成版本号；支持版本对比与回滚。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-ghost" data-action="toast" data-msg="模板已复制为「赣南脐橙 · 2027 草案」（演示）">复制模板</button>
+          <button class="btn btn-primary" data-action="publish">发布新版本</button>
+        </div>
+      </div>
+
+      <div class="three-col" style="margin-bottom:16px">
+        ${D.admin.templates.map((tp,i)=>`
+          <button class="card card-pad" data-action="select-tpl" data-idx="${i}" style="text-align:left;border-color:${S.tplIdx===i?"#D8CDB2":"var(--line)"};background:${S.tplIdx===i?"#FCFAF3":"rgba(252,250,243,.6)"}">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <span class="eyebrow" style="color:var(--gold)">${esc(tp.industry)}</span>
+              <span class="pill ${tp.status==="生效中"?"pill-green":tp.status==="配置中"?"pill-gray":"pill-amber"}"><i></i>${esc(tp.status)}</span>
+            </div>
+            <div style="font-family:var(--serif);font-size:16px;font-weight:600;margin-top:9px;letter-spacing:.03em">${esc(tp.name)}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:10px;color:var(--ink-3)">
+              <span>${esc(tp.meta)}</span><span class="mono">${esc(tp.ver)}</span>
+            </div>
+          </button>`).join("")}
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>赣南脐橙 · 规则包编辑</h3><span class="hint">草稿 v1.5 · 未发布</span></div>
+        <div class="editor-split">
+          <div class="editor-form">
+            <div class="form-group">
+              <label>模板基本信息</label>
+              <div class="form-grid">
+                <input class="input" value="赣南脐橙 · 2026 版" />
+                <input class="input" value="v1.5 · 草稿" />
+              </div>
+              <input class="input" style="margin-top:8px" value="生效范围：南昌分行 / 脐橙 / 全金额段" />
+            </div>
+
+            <div class="form-group">
+              <label>额度公式参数</label>
+              <div class="form-grid-3">
+                <div><span class="note-mini">近三年平均销售收入（万元）</span><input class="input num" style="margin-top:4px" data-live="sales" type="number" value="${t.sales}" /></div>
+                <div><span class="note-mini">申报面积（亩）</span><input class="input num" style="margin-top:4px" data-live="area" type="number" value="${t.area}" /></div>
+                <div><span class="note-mini">亩均投入（元）</span><input class="input num" style="margin-top:4px" data-live="perMu" type="number" value="${t.perMu}" /></div>
+              </div>
+              <div class="form-grid" style="margin-top:8px">
+                <div><span class="note-mini">综合系数（0.6—1.2）</span><input class="input num" style="margin-top:4px" data-live="coef" type="number" step="0.01" min="0.6" max="1.2" value="${t.coef}" /></div>
+                <div><span class="note-mini">政策上限（万元）</span><input class="input num" style="margin-top:4px" data-live="cap" type="number" value="${t.cap}" /></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>准入清单 · 条件表达式</label>
+              <div class="form-grid">
+                ${["主体资格有效 · 经营 ≥ 3 年","申报面积与遥感偏差 ≤ 15%","政策性农险在保","订单覆盖率 ≥ 50%"].map((x,i)=>`<div class="check on"><i>✓</i>${x}</div>`).join("")}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>一票否决 · 命中即不予受理</label>
+              <div class="form-grid">
+                ${D.admin.trial.vetoes.map(v=>`<div class="check ${t.veto[v.key]?"on":""}" data-veto="${v.key}"><i>${t.veto[v.key]?"✓":""}</i>${esc(v.label)}</div>`).join("")}
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0">
+              <label>预警指标</label>
+              <div class="form-grid">
+                <div class="check ${t.warn.ndvi?"on":""}" data-warn="ndvi"><i>${t.warn.ndvi?"✓":""}</i>NDVI 低于同期 15%</div>
+                <div class="check ${t.warn.price?"on":""}" data-warn="price"><i>${t.warn.price?"✓":""}</i>地头价跌破成本线 20%</div>
+                <div class="check ${t.warn.delay?"on":""}" data-warn="delay"><i>${t.warn.delay?"✓":""}</i>连续两期回款延迟</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="editor-preview">
+            <div class="card-head" style="padding:0 0 10px;border-bottom:none"><h3 style="font-size:14px">保存前试算 · 3 组样例</h3><span class="hint">试算不通过不允许发布</span></div>
+            <div id="trial-list">
+              ${D.admin.trial.samples.map((s,i)=>{
+                const r = tplCalc(s);
+                return `<div class="trial">
+                  <div class="trial-head"><b>${esc(s.name)}</b><span class="flag">样例 ${i+1}</span></div>
+                  <div class="trial-line"><span>销售收入 × 0.56</span><strong>${(s.sales*0.56).toFixed(2)} 万元</strong></div>
+                  <div class="trial-line"><span>面积 × 亩均投入 × 系数</span><strong>${(s.area*s.perMu*t.coef/10000).toFixed(2)} 万元</strong></div>
+                  <div class="trial-line"><span>政策上限</span><strong>${t.cap} 万元</strong></div>
+                  <div class="trial-result"><span style="font-size:10px;color:var(--ink-3)">建议额度</span><span class="amt">${nf(r)} 万元</span></div>
+                </div>`;
+              }).join("")}
+            </div>
+            <div class="trial" style="border-color:#D8CDB2;background:#FBF7EA">
+              <div class="trial-head"><b>发布前校验</b><span class="pill pill-green" id="trial-flag"><i></i>3 / 3 通过</span></div>
+              <div class="trial-line"><span>公式语法</span><strong>通过</strong></div>
+              <div class="trial-line"><span>系数区间</span><strong>0.60 — 1.20</strong></div>
+              <div class="trial-line"><span>一票否决</span><strong id="veto-state">${Object.values(t.veto).some(Boolean)?"命中 · 试算转人工复核":"未命中"}</strong></div>
+              <div class="trial-line"><span>规则包体积</span><strong>38.4 KB</strong></div>
+            </div>
+
+            <div class="rule-json" id="rule-json">${ruleJson()}</div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="btn btn-ghost btn-sm" data-action="toast" data-msg="草稿已保存，未影响在途单据（演示）">保存草稿</button>
+              <button class="btn btn-primary btn-sm" data-action="publish">发布 v1.5</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function ruleJson(){
+    const t = S.tpl;
+    const veto = D.admin.trial.vetoes.filter(v=>t.veto[v.key]).map(v=>`"${v.key}"`);
+    return `<span class="k">// 脐橙模板 · 规则包（节选）</span>
+{
+  <span class="k">"template"</span>: <span class="s">"赣南脐橙"</span>, <span class="k">"version"</span>: <span class="s">"v1.5-draft"</span>,
+  <span class="k">"formula"</span>: {
+    <span class="k">"type"</span>: <span class="s">"min"</span>,
+    <span class="k">"items"</span>: [<span class="s">"sales*0.56"</span>, <span class="s">"area*${t.perMu}*${t.coef}"</span>, ${t.cap}]
+  },
+  <span class="k">"params"</span>: {
+    <span class="k">"salesAvg"</span>: ${t.sales}, <span class="k">"area"</span>: ${t.area},
+    <span class="k">"perMuCost"</span>: ${t.perMu}, <span class="k">"coefficient"</span>: ${t.coef}
+  },
+  <span class="k">"vetoes"</span>: [${veto.join(", ")}],
+  <span class="k">"alerts"</span>: [<span class="s">"ndvi&lt;15%*2m"</span>, <span class="s">"price&lt;-20%"</span>, <span class="s">"delay*2"</span>]
+}`;
+  }
+
+  function adminRules(){
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">规则治理 · 版本 / 灰度 / 回滚</div>
+          <h1 class="page-title">规则与灰度 <span class="thin">/ 每次改动留版本、留审批人</span></h1>
+          <p class="page-sub">参数进配置，不进代码。规则包在提交时锁定版本并写入申请单快照；后台换版只影响新提交的单据。</p>
+        </div>
+        <div class="page-actions"><button class="btn btn-ghost" data-action="toast" data-msg="已发起规则变更单，待三方确认（演示）">新建变更单</button></div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head"><h3>规则版本</h3><span class="hint">共 4 个版本 · 1 个灰度中</span></div>
+        <div class="table-wrap"><table class="table">
+          <thead><tr><th>版本</th><th>场景</th><th>生效范围</th><th>灰度比例</th><th>状态</th><th>生效日期</th><th>编制</th><th>操作</th></tr></thead>
+          <tbody>${D.admin.versions.map((v,i)=>`
+            <tr>
+              <td class="strong mono">${esc(v.ver)}</td><td>${esc(v.scene)}</td><td class="muted">${esc(v.scope)}</td>
+              <td style="width:130px"><div style="display:flex;align-items:center;gap:8px">${meter(parseInt(v.gray))}<span class="num">${esc(v.gray)}</span></div></td>
+              <td><span class="pill ${v.status==="已生效"?"pill-green":v.status==="灰度观察"?"pill-amber":"pill-gray"}"><i></i>${esc(v.status)}</span></td>
+              <td class="muted">${esc(v.date)}</td><td>${esc(v.by)}</td>
+              <td><button class="btn-text" data-action="${v.status==="已生效"?"toast":"rollback"}" data-msg="已打开版本对比（演示）">对比</button></td>
+            </tr>`).join("")}</tbody>
+        </table></div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><h3>灰度控制 · v1.4</h3><span class="hint">按机构、产业、金额段生效</span></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:11px;color:var(--ink-2)">灰度比例</span>
+              <span class="num" id="grayVal" style="font-family:var(--serif);font-size:20px;color:var(--green-800)">${S.gray}%</span>
+            </div>
+            <input type="range" min="0" max="100" value="${S.gray}" id="grayRange" style="width:100%;accent-color:#18513F" />
+            <div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--ink-3);margin-top:4px"><span>0% 关闭</span><span>20% 当前</span><span>100% 全量</span></div>
+            <div class="hairline"></div>
+            <div class="check-list">
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>命中范围</b><br><span>南昌分行 / 脐橙 / 单笔 ≤ 100 万元</span></div></div>
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>观察指标</b><br><span>建议额度偏离度、人工调整率、首逾 30 天早期信号</span></div></div>
+              <div class="check-row"><span class="warnmark ok">${icon("alert")}</span><div><b>回滚条件</b><br><span>人工调整率 > 25% 或出现规则误判 → 一键回滚 v1.3</span></div></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:14px">
+              <button class="btn btn-primary btn-sm" data-action="toast" data-msg="灰度比例已更新，无需发版（演示）">保存灰度</button>
+              <button class="btn btn-danger btn-sm" data-action="rollback">回滚至 v1.3</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h3>互认清单</h3><span class="hint">MI-2026-11 · 三类条目</span></div>
+            <div class="card-body">
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>模板准入结论</b><br><span>银行 / 农担双方确认 · 2026-11-12 · 版本 MI-03</span></div></div>
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>额度区间</b><br><span>区间上下限 ±5% 内采信 · 版本 MI-07</span></div></div>
+              <div class="check-row"><span class="ok">${icon("check")}</span><div><b>预警信号</b><br><span>仅采信工单状态，不采信处置结论 · 版本 MI-02</span></div></div>
+              <div class="note-mini" style="margin-top:10px">不互认：银行信贷审批终审、农担担保评审终审、例外处理、评审会决议。</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>变更控制</h3><span class="hint">五要素缺一不受理</span></div>
+            <div class="card-body">
+              <div class="field-row"><span class="k">单次变更工作量</span><span class="v" style="border-bottom:none;cursor:default">≤ 10 人日 · 项目负责人审批</span></div>
+              <div class="field-row"><span class="k">超过 10 人日</span><span class="v" style="border-bottom:none;cursor:default">三方确认后执行</span></div>
+              <div class="field-row"><span class="k">紧急缺陷</span><span class="v" style="border-bottom:none;cursor:default">走缺陷流程，不作加需求通道</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function adminSource(){
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">数据网关 · 12 类数据源</div>
+          <h1 class="page-title">数据源目录 <span class="thin">/ 取回来不等于能用</span></h1>
+          <p class="page-sub">授权、脱敏、溯源三件事齐全才可用。一期只启用行内流水、征信、遥感、订单 / 保单四类，其余二期。</p>
+        </div>
+        <div class="page-actions"><button class="btn btn-ghost" data-action="toast" data-msg="质量报告已导出（演示）">质量报告</button><button class="btn btn-primary" data-action="toast" data-msg="新增数据源需先登记合规三件套（演示）">新增数据源</button></div>
+      </div>
+
+      <div class="four-col" style="margin-bottom:16px">
+        <div class="kpi"><div class="kpi-label">已接入</div><div class="kpi-value" style="font-size:26px">8<small>类</small></div><div class="kpi-foot"><span>一期 4 类 · 公开 3 类 · 行内 1 类</span></div></div>
+        <div class="kpi"><div class="kpi-label">平均成功率</div><div class="kpi-value" style="font-size:26px">97.1<small>%</small></div><div class="kpi-foot"><span>近 7 日 · 低于 95% 告警</span></div></div>
+        <div class="kpi"><div class="kpi-label">字段级溯源覆盖</div><div class="kpi-value" style="font-size:26px">100<small>%</small></div><div class="kpi-foot"><span>验收硬指标</span></div></div>
+        <div class="kpi"><div class="kpi-label">降级中</div><div class="kpi-value" style="font-size:26px">0<small>类</small></div><div class="kpi-foot"><span>征信不可用则阻断预授信</span></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>数据源清单</h3><span class="hint">状态 / SLA / 成功率 / 合规口径</span></div>
+        <div class="table-wrap"><table class="table">
+          <thead><tr><th>数据源</th><th>接入方式</th><th>状态</th><th>SLA</th><th>近 7 日成功率</th><th>合规与口径</th><th>操作</th></tr></thead>
+          <tbody>${D.admin.sources.map(s=>`
+            <tr>
+              <td class="strong">${esc(s.name)}</td>
+              <td class="muted">${esc(s.type)}</td>
+              <td><span class="pill ${s.status==="已接入"?"pill-green":s.status==="二期"?"pill-gray":"pill-amber"}"><i></i>${esc(s.status)}</span></td>
+              <td class="num">${esc(s.sla)}</td>
+              <td>${s.success==="—"?"<span class='muted'>—</span>":`<div style="display:flex;align-items:center;gap:8px">${meter(parseFloat(s.success))}<span class="num">${esc(s.success)}</span></div>`}</td>
+              <td class="muted" style="font-size:10.5px">${esc(s.note)}</td>
+              <td><button class="btn-text" data-action="toast" data-msg="调用留痕与字段级质量看板（演示）">留痕</button></td>
+            </tr>`).join("")}</tbody>
+        </table></div>
+      </div>
+      <p class="note-mini" style="margin-top:12px">脱敏只做展示层，原始值加密存储；身份证保留前 3 后 4 位，手机号按 3-4-4。客户侧不展示征信明细、评分因子与他行数据。</p>
+    </div>`;
+  }
+
+  function adminAudit(){
+    return `<div class="page">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">审计员视图 · 只读</div>
+          <h1 class="page-title">审计日志 <span class="thin">/ 只增不改，不可删除</span></h1>
+          <p class="page-sub">登录、查询、导出、配置变更四类操作全量留痕；越权取数被拒绝并写入日志。保留期默认在线 180 天、归档 3 年。</p>
+        </div>
+        <div class="page-actions"><button class="btn btn-ghost" data-action="toast" data-msg="导出需审批，已发起申请（演示）">申请导出</button></div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:12px 16px">
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            ${["全部","查询","导出","配置变更","越权"].map((x,i)=>`<button class="chip ${i===0?"on":""}" data-action="toast" data-msg="按操作类型筛选（演示）">${x}</button>`).join("")}
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="input" style="width:190px" placeholder="操作人 / 业务编号" />
+            <input class="input" style="width:170px" type="date" value="2026-11-20" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>操作记录</h3><span class="hint">最近 8 条 · 按时间倒序</span></div>
+        <div class="table-wrap"><table class="table">
+          <thead><tr><th>时间</th><th>操作人</th><th>动作</th><th>对象</th><th>IP</th><th>结果</th><th>数据级别</th></tr></thead>
+          <tbody>${D.admin.audits.map(a=>`
+            <tr>
+              <td class="num muted">${esc(a.time)}</td>
+              <td>${esc(a.actor)}</td>
+              <td><span class="pill ${a.action.includes("拒绝")?"pill-red":a.action.includes("导出")?"pill-amber":"pill-gray"}"><i></i>${esc(a.action)}</span></td>
+              <td style="font-size:10.5px">${esc(a.object)}</td>
+              <td class="mono muted">${esc(a.ip)}</td>
+              <td style="font-size:10.5px">${esc(a.result)}</td>
+              <td><span class="tag">${esc(a.level)}</span></td>
+            </tr>`).join("")}</tbody>
+        </table></div>
+      </div>
+      <div class="warn-line" style="margin-top:14px">平台管理员不得同时拥有业务数据导出权限；导出须审批并加水印，导出记录进入审计日志。</div>
+    </div>`;
+  }
+
+  /* ---------- CLIENT ---------- */
+  function clientJourney(){
+    const steps = [
+      { t:"扫码申请", time:"3 分钟", sys:"生成申请单、OCR 预填、GPS 与时间水印校验", body:"七项信息、三张照片，一屏一题，可暂存。" },
+      { t:"模板匹配", time:"10 秒", sys:"规则求值、锁定规则版本、返回准入结论与材料清单", body:"九项输入逐条过准入，材料一次告知。" },
+      { t:"画像核验", time:"15 分钟", sys:"调用四类数据源、计算完整度、生成画像快照", body:"遥感、流水、订单、保险交叉核验。" },
+      { t:"并联审批", time:"1 个工作日", sys:"双端节点并行、状态同步、互认清单校验、担保函流转", body:"银行与农担看同一份画像、同一个节点状态。" },
+      { t:"放款陪伴", time:"4 小时", sys:"签约任务、还款计划生成、放款回写、贷后监测", body:"电子签约、受托支付、按月监测。" }
+    ];
+    return `<div class="page client-view">
+      <div class="journey-left">
+        <div class="eyebrow">客户 H5 · 50 万元以下纯线上链路</div>
+        <h1 class="journey-title">从扫码到放款，<br><em>五步，两天。</em></h1>
+        <p class="journey-lead">客户只有一个目标：少填、少跑、看得懂进度。需要重复输入的内容，都应由证照调取或 OCR 预填解决。
+        点击右侧任意节点，查看客户在这一步看到什么。</p>
+        <div class="journey-steps">
+          ${steps.map((s,i)=>`
+            <div class="jstep ${S.jstep===i?"active":""}" data-jstep="${i}">
+              <div class="jno">0${i+1}</div>
+              <div><h3>${s.t} ${i===3?'<span class="tag">并联</span>':""}</h3><p>${s.body}</p></div>
+              <div class="jt"><b>${s.time}</b>系统动作<br><span style="color:var(--ink-3);font-size:8.5px">全程留痕</span></div>
+            </div>`).join("")}
+        </div>
+        <div class="journey-note">
+          <span>※</span>
+          <span>50 万元及以上自动生成一次现场核验任务，整体 3—5 个工作日。审批时长不含银行与农担评审会、例外处理；预授信不构成授信承诺，以银行与农担审批为准。</span>
+        </div>
+
+        <div class="card" style="margin-top:24px">
+          <div class="card-head"><h3>同一笔业务，两种做法</h3><span class="hint">并联 · 复用 · 替代</span></div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+              ${[
+                ["办理时效","1—3 天","原 7—15 天"],
+                ["材料采集","1 套","原 3 套"],
+                ["重复录入","1 次","原 3 次"],
+                ["单笔尽调成本","≤ 80 元","原约 800 元"]
+              ].map((x,i)=>`<div style="padding:0 14px;border-left:${i===0?"none":"1px solid var(--line-2)"}">
+                <div class="note-mini" style="letter-spacing:.08em">${x[0]}</div>
+                <div style="font-family:var(--serif);font-size:23px;margin-top:5px;color:var(--green-700);font-weight:600">${x[1]}</div>
+                <div class="note-mini" style="margin-top:2px;color:var(--ink-3)">${x[2]}</div>
+              </div>`).join("")}
+            </div>
+            <div class="hairline"></div>
+            <div class="note-mini">效率不是来自“更努力”，而是来自“不再重复”。材料一次采集、节点并行、清单内结论互认；评审会与例外处理仍按双方制度执行。</div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-wrap">${phone()}</div>
+    </div>`;
+  }
+
+  function phone(){
+    const titles = ["申请填报","准入结果","产业画像","并联审批","放款与还款"];
+    return `<div class="phone">
+      <div class="phone-screen">
+        <div class="m-status"><span>9:41</span><span class="island"></span><span class="right"><span class="sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>5G <span>▮</span></span></div>
+        <div class="m-apphead">
+          <div class="m-brand"><div class="mseal"><span>兴</span><span>农</span></div><div><b>兴农联担</b><div style="font-size:8px;color:#8A938B;letter-spacing:.06em">${esc(titles[S.jstep])}</div></div></div>
+          <span style="color:#4A554D">${icon("msg")}</span>
+        </div>
+        <div class="m-screen">${phoneScreen(S.jstep)}</div>
+        <div class="m-tabs">
+          <div class="${S.jstep===0?"on":""}">${icon("home")}<span>首页</span></div>
+          <div class="${S.jstep<=2?"on":""}">${icon("doc")}<span>申请</span></div>
+          <div class="${S.jstep===3?"on":""}">${icon("clock")}<span>进度</span></div>
+          <div class="${S.jstep===4?"on":""}">${icon("user")}<span>我的</span></div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function phoneScreen(step){
+    if(step===0){
+      return `
+      <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between"><span class="m-pill">草稿已自动保存</span><span style="font-size:8.5px;color:#8A938B">第 1 / 7 项</span></div>
+      <div class="m-progress"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="m-step-title">这块果园，<br>一共多少亩？</div>
+      <div class="m-step-sub">已从地块勾绘带入 3 块连片地块，可修改。</div>
+      <div style="margin-top:14px;border:1px solid #D8CFB9;background:#FCFAF3;padding:14px 13px;border-radius:3px">
+        <div style="font-size:8.5px;color:#8A938B;letter-spacing:.1em">申报面积</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-top:6px"><span style="font-family:var(--serif);font-size:38px;font-weight:600;color:#17211B">120</span><span style="font-size:11px;color:#4A554D">亩</span><span class="m-pill" style="margin-left:auto">遥感核验 118.6 亩</span></div>
+        <div style="border-top:1px solid #EEE7D7;margin-top:10px;padding-top:8px;display:flex;justify-content:space-between;font-size:8.5px;color:#8A938B"><span>GPS 定位 · 瑞金市黄柏乡</span><span>可暂存</span></div>
+      </div>
+      <div class="m-label">已识别证照 <span>OCR 预填</span></div>
+      <div class="m-card" style="padding:4px 12px">
+        ${[["家庭农场","傅启明 · 瑞金市"],["身份证","傅** · 360781****"],["收购合同","果汁集团 · 62.4 万元"]].map(x=>`<div class="m-listitem"><div><b>${x[0]}</b><small>${x[1]}</small></div><span class="m-pill">已核验</span></div>`).join("")}
+      </div>
+      <div class="m-label">现场照片 <span>GPS + 时间水印</span></div>
+      <div class="m-photo">
+        <div class="done">${icon("check")}<span>身份证</span></div>
+        <div class="done">${icon("check")}<span>地块</span></div>
+        <div>${icon("doc")}<span>收购订单</span></div>
+      </div>
+      <button class="m-btn" data-action="jnext">下一步 · 提交准入</button>`;
+    }
+    if(step===1){
+      return `
+      <div class="m-hero">
+        <div class="k">模板匹配 · 8.4 秒</div>
+        <div class="v" style="font-size:24px;margin-top:10px">准入通过</div>
+        <div class="foot"><span>赣南脐橙 · 规则包 v1.3</span><span>已锁定版本</span></div>
+      </div>
+      <div class="m-label">逐条求值 <span>附原因码</span></div>
+      <div class="m-card" style="padding:4px 12px">
+        ${[["主体资格","家庭农场 · 经营 9 年","通过"],["申报面积","120 亩 · 遥感 118.6 亩","通过"],["品种 / 树龄","纽荷尔 · 12 年","通过"],["一票否决","黄龙病 / 亏损 / 诉讼","未命中"]].map(x=>`<div class="m-listitem"><div><b>${x[0]}</b><small>${x[1]}</small></div><span class="m-pill">${x[2]}</span></div>`).join("")}
+      </div>
+      <div class="m-label">材料清单 · 一次告知 <span>5 项</span></div>
+      <div class="m-card" style="padding:10px 12px">
+        ${["身份证正反面","地块边界与现场照片","收购合同","政策性农险保单","近 12 个月流水"].map((m,i)=>`<div style="display:flex;gap:7px;align-items:center;font-size:10px;padding:4px 0"><span style="width:12px;height:12px;border-radius:50%;background:#E4EEE6;border:1px solid #C9DBCD;color:#1B6249;display:flex;align-items:center;justify-content:center;font-size:7px">${i<3?"✓":""}</span>${m}</div>`).join("")}
+      </div>
+      <div class="m-note">材料一次采集，四端复用；同一笔业务只发一次补件清单。</div>
+      <button class="m-btn" data-action="jnext">签署授权并核验数据</button>`;
+    }
+    if(step===2){
+      const circ = 2 * Math.PI * 40;
+      return `
+      <div style="display:flex;align-items:center;gap:14px;margin-top:4px">
+        <div style="width:104px;height:104px;position:relative;flex:0 0 auto">
+          <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#E7E0CF" stroke-width="6"/><circle cx="50" cy="50" r="40" fill="none" stroke="#18513F" stroke-width="6" stroke-linecap="butt" stroke-dasharray="${circ*0.86} ${circ}" transform="rotate(-90 50 50)"/></svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font-family:var(--serif);font-size:26px;font-weight:600">86%</span><span style="font-size:7.5px;color:#8A938B;letter-spacing:.08em">数据完整度</span></div>
+        </div>
+        <div><div style="font-family:var(--serif);font-size:17px;line-height:1.4">画像核验完成</div><div style="font-size:9px;color:#7D877E;line-height:1.7;margin-top:4px">阈值 60% · 高于阈值可出预授信<br>生成时间 09:31 · 15 分钟</div></div>
+      </div>
+      <div class="m-label">四类数据源 <span>五要素可溯源</span></div>
+      <div class="m-card" style="padding:4px 12px">
+        ${[["遥感","118.6 亩 · NDVI 0.71","高"],["行内流水","58.7 万元 · 12 个月","高"],["收购订单","62.4 万元 · 覆盖率 82%","中"],["政策性农险","110 亩 · 有效","高"]].map(x=>`<div class="m-listitem"><div><b>${x[0]}</b><small>${x[1]}</small></div><span class="m-pill">${x[2]}置信</span></div>`).join("")}
+      </div>
+      <div class="m-label">冲突校验</div>
+      <div class="m-card" style="padding:10px 12px">
+        ${[["面积 -1.2%","阈值 15%"],["订单 +6.3%","阈值 20%"],["投保 -8.3%","阈值 15%"]].map(x=>`<div style="display:flex;justify-content:space-between;font-size:9px;padding:3px 0;color:#4A554D"><span>${x[0]}</span><span style="color:#7D877E">${x[1]} · 通过</span></div>`).join("")}
+      </div>
+      <div class="m-note">完整度低于 60% 只出材料清单，不出额度；数据不全时给数字，客户会当成承诺。</div>
+      <button class="m-btn" data-action="jnext">查看预授信结果</button>`;
+    }
+    if(step===3){
+      return `
+      <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center"><span class="m-pill">S08 · 并联审批中</span><span style="font-size:8.5px;color:#8A938B">预计 11-22 完成</span></div>
+      <div class="m-step-title" style="margin-top:10px">银行与农担，<br>在看同一块屏。</div>
+      <div class="m-step-sub">材料只交一次，节点同时推进；责任仍由双方各自签批。</div>
+      <div class="m-card" style="margin-top:12px;padding:12px">
+        <div class="m-timeline">
+          <div class="m-tl"><div class="dot done">✓</div><div><b>银行受理 · 陈旻</b><span>11-20 10:12 · 建议额度 58 万元</span></div><span class="st">已完成</span></div>
+          <div class="m-tl"><div class="dot done">✓</div><div><b>农担在保校验</b><span>单户余额 96 万 / 上限 1,000 万</span></div><span class="st">通过</span></div>
+          <div class="m-tl"><div class="dot cur"></div><div><b>担保评审 · 周立</b><span>待出函 · 互认清单命中 2 条</span></div><span class="st">进行中</span></div>
+          <div class="m-tl"><div class="dot"></div><div><b>电子签约</b><span>合同生成后推送给您</span></div></div>
+        </div>
+      </div>
+      <div class="m-label">互认清单 <span>不转移审批责任</span></div>
+      <div class="m-card" style="padding:4px 12px">
+        <div class="m-listitem"><div><b>模板准入结论</b><small>脐橙 v1.3 · 双方采信</small></div><span class="m-pill">已采信</span></div>
+        <div class="m-listitem"><div><b>额度区间</b><small>52—61 万元 · 区间内</small></div><span class="m-pill">已采信</span></div>
+        <div class="m-listitem"><div><b>预警信号</b><small>本次无预警</small></div><span class="m-pill" style="background:#F1E5C9;border-color:#E1CFA4;color:#7C5B1D">无需采信</span></div>
+      </div>
+      <div class="m-note">如需补件，系统一次告知全部缺项，补齐后自动重新核验，不因换角色再要一遍。</div>
+      <button class="m-btn ghost" data-action="jnext">模拟补件通过 · 进入签约</button>`;
+    }
+    return `
+      <div class="m-hero">
+        <div class="k">预授信额度 · 36 个月</div>
+        <div class="v">58<small>万元</small></div>
+        <div class="foot"><span>利率区间 3.75% — 4.15%</span><span>担保费 0.8%</span></div>
+      </div>
+      <div class="m-note" style="margin-top:8px">预授信非最终授信，以银行与农担审批为准。本页为演示测算。</div>
+      <div class="m-label">当前状态 <span>5 / 5</span></div>
+      <div class="m-card" style="padding:4px 12px">
+        <div class="m-listitem"><div><b>电子签约</b><small>11-22 14:30 · 意愿确认已留痕</small></div><span class="m-pill">已签约</span></div>
+        <div class="m-listitem"><div><b>放款到账</b><small>11-22 16:10 · 受托支付至农资供应商</small></div><span class="m-pill">58 万元</span></div>
+        <div class="m-listitem"><div><b>担保函</b><small>编号 NXD-2026-0087 · 可预览</small></div><span class="m-pill">已出具</span></div>
+      </div>
+      <div class="m-label">还款计划 <span>宽限期 6 个月</span></div>
+      <div class="m-card" style="padding:4px 12px">
+        ${[["2027-05-20","本金 1.61 万","利息 0.19 万"],["2027-08-20","本金 1.61 万","利息 0.17 万"],["2027-11-20","本金 1.61 万","利息 0.15 万"]].map((x,i)=>`<div class="m-listitem"><div><b>第 ${i+1} 期 · ${x[0]}</b><small>${x[1]} + ${x[2]}</small></div><span class="m-pill" style="background:#F8F4E9;border-color:#D8CFB9;color:#6B7368">待还</span></div>`).join("")}
+      </div>
+      <div class="m-note">保后：12 次数据监测 + 2 次现场核验，替代每年 4 次上门。预警核查 48 小时内响应。</div>
+      <button class="m-btn ghost" data-action="jreset">回到第一步 · 重新体验</button>`;
+  }
+
+  /* ---------- MODAL ---------- */
+  function renderModal(){
+    if(!S.modal) return "";
+    let body = "", foot = "";
+    if(S.modal.type==="approve"){
+      body = `<div class="modal-text">审批对象：<b>NX2026120007 · 瑞金市橙丰家庭农场</b><br>建议额度 <b>58 万元</b>，系统结论为「建议通过」。审批结论由人工签批，规则不直接置位。</div>
+        <div style="margin-top:14px"><label style="font-size:10px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:6px">审批意见</label>
+        <textarea class="input" id="approveOpinion" rows="3">同意授信 58 万元，期限 36 个月，按脐橙模板 v1.3 口径执行；放款前确认保单在保。</textarea></div>
+        <div class="warn-line">通过后单据流转至 S09，事件表记录操作人、角色、机构、前后状态、意见与耗时。</div>`;
+      foot = `<button class="btn btn-ghost" data-action="close-modal">取消</button><button class="btn btn-primary" data-action="confirm-approve">确认通过 · S09</button>`;
+    }
+    if(S.modal.type==="reject"){
+      body = `<div class="modal-text">退回补件会将单据流转至 <b>S06 待补材料</b>，并向客户发送一次告知清单。已采集材料继续复用。</div>
+        <div style="margin-top:14px"><label style="font-size:10px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:6px">退回原因</label>
+        <textarea class="input" id="rejectReason" rows="3">订单合同缺少收购方盖章页，请补充完整后重新提交。</textarea></div>`;
+      foot = `<button class="btn btn-ghost" data-action="close-modal">取消</button><button class="btn btn-danger" data-action="confirm-reject">确认退回 · S06</button>`;
+    }
+    if(S.modal.type==="letter"){
+      body = `<div class="modal-text">即将为 <b>遂川县青岭油茶专业合作社</b> 出具担保函，金额 <b>188 万元</b>，期限 60 个月。签章由农担既有 CA 平台完成，平台只做任务编排与回执归档。</div>
+        <div class="warn-line">出具后不可撤回，需重新出具作废函；编号按机构与年月生成。</div>
+        <div class="seal-stamp">江西省农业信贷<br>融资担保有限公司<br>担保专用章</div>`;
+      foot = `<button class="btn btn-ghost" data-action="close-modal">取消</button><button class="btn btn-gold" data-action="confirm-letter">确认出具担保函</button>`;
+    }
+    if(S.modal.type==="publish"){
+      body = `<div class="modal-text">发布 <b>赣南脐橙 v1.5</b>？发布后仅影响新提交单据，在途单据继续使用提交时锁定的 v1.3 快照。</div>
+        <div style="margin-top:12px"><label style="font-size:10px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:6px">灰度比例</label><input class="input num" type="number" value="20" /></div>
+        <div class="warn-line">发布前需通过 3 组样例试算；发布后生成版本号并记录审批人。</div>`;
+      foot = `<button class="btn btn-ghost" data-action="close-modal">取消</button><button class="btn btn-primary" data-action="confirm-publish">确认发布 v1.5</button>`;
+    }
+    if(S.modal.type==="rollback"){
+      body = `<div class="modal-text">回滚 <b>v1.4 → v1.3</b>？灰度中的 20% 流量将立即切回 v1.3，无需发版，回滚时间不超过 10 分钟。</div>
+        <div class="warn-line">回滚记录写入审计日志；已生成快照的在途单据不受影响。</div>`;
+      foot = `<button class="btn btn-ghost" data-action="close-modal">取消</button><button class="btn btn-danger" data-action="confirm-rollback">确认回滚</button>`;
+    }
+    return `<div class="modal-mask">
+      <div class="modal">
+        <div class="modal-head"><h3>${S.modal.type==="letter"?"出具担保函":S.modal.type==="publish"?"发布规则版本":S.modal.type==="rollback"?"回滚规则版本":S.modal.type==="reject"?"退回补件":"审批处理"}</h3><button class="close" data-action="close-modal">×</button></div>
+        <div class="modal-body">${body}</div>
+        <div class="modal-foot">${foot}</div>
+      </div>
+    </div>`;
+  }
+
+  function toast(msg){
+    S.toast = msg;
+    render();
+    clearTimeout(S.toastTimer);
+    S.toastTimer = setTimeout(()=>{ S.toast = null; render(); }, 2600);
+  }
+
+  /* ---------- RENDER ---------- */
+  function render(){
+    const app = document.getElementById("app");
+    if(!S.role){ app.innerHTML = renderCover() + (S.toast?`<div class="toast"><i></i>${esc(S.toast)}</div>`:""); return; }
+    if(S.role==="client"){
+      app.innerHTML = `<div class="shell" style="grid-template-columns:1fr">
+        <main class="main">
+          <header class="topbar">
+            <div class="crumb"><span>兴农联担</span><span>/</span><b>客户 H5</b><span>/</span><span>五步旅程</span></div>
+            <div class="topbar-right"><span class="demo-tag"><i></i>${esc(D.meta.env)}</span><span class="role-pill">${icon("user")}客户</span><button class="switch-role" data-action="switch-role">切换角色</button></div>
+          </header>
+          ${clientJourney()}
+        </main>
+      </div>` + (S.toast?`<div class="toast"><i></i>${esc(S.toast)}</div>`:"") + renderModal();
+      return;
+    }
+    const page = {
+      "bank-home":bankHome, "bank-pool":bankPool, "bank-detail":bankDetail,
+      "g-home":gHome, "g-review":gReview,
+      "admin-tpl":adminTpl, "admin-rules":adminRules, "admin-source":adminSource, "admin-audit":adminAudit
+    }[S.view] || bankHome;
+    app.innerHTML = renderShell(page()) + (S.toast?`<div class="toast"><i></i>${esc(S.toast)}</div>`:"") + renderModal();
+  }
+
+  /* ---------- 事件 ---------- */
+  document.addEventListener("click", e => {
+    const el = e.target.closest("[data-role],[data-nav],[data-app],[data-tab],[data-field],[data-jstep],[data-action],[data-cite],[data-veto],[data-warn]");
+    if(!el) return;
+
+    if(el.dataset.role){
+      S.role = el.dataset.role;
+      S.view = { client:"client", bank:"bank-home", guarantee:"g-home", admin:"admin-tpl" }[S.role];
+      S.tab = "overview"; S.modal = null; render(); return;
+    }
+    if(el.dataset.nav){
+      S.view = el.dataset.nav;
+      if(S.view==="bank-detail") S.tab = "overview";
+      S.modal = null; render(); return;
+    }
+    if(el.dataset.app){
+      const no = el.dataset.app;
+      if(no==="NX2026120007"){
+        S.role = "bank"; S.view = "bank-detail"; S.tab = "overview"; render();
+      } else {
+        toast("该单据为列表造数；完整演示请打开 NX2026120007");
+      }
+      return;
+    }
+    if(el.dataset.tab){ S.tab = el.dataset.tab; render(); return; }
+    if(el.dataset.field){ S.field = el.dataset.field; render(); return; }
+    if(el.dataset.jstep!==undefined && el.classList.contains("jstep")){
+      S.jstep = parseInt(el.dataset.jstep); render(); return;
+    }
+    if(el.dataset.cite){
+      const map = { "F-01":"遥感核验面积 · 118.6 亩","F-02":"NDVI 时序 · 0.71","F-03":"灾情图斑 · 未发现","F-04":"近三年销售收入","F-07":"近 12 月回款流水","F-09":"投保面积 · 110 亩","F-11":"额度公式 v1.3","F-12":"系数构成 0.98","F-15":"政策上限 300 万元" };
+      toast("引用 " + el.dataset.cite + " → " + (map[el.dataset.cite] || "结构化字段"));
+      return;
+    }
+    if(el.dataset.veto){
+      const k = el.dataset.veto; S.tpl.veto[k] = !S.tpl.veto[k];
+      el.classList.toggle("on", S.tpl.veto[k]);
+      el.querySelector("i").textContent = S.tpl.veto[k] ? "✓" : "";
+      refreshTrial(); return;
+    }
+    if(el.dataset.warn){
+      const k = el.dataset.warn; S.tpl.warn[k] = !S.tpl.warn[k];
+      el.classList.toggle("on", S.tpl.warn[k]);
+      el.querySelector("i").textContent = S.tpl.warn[k] ? "✓" : "";
+      return;
+    }
+
+    const a = el.dataset.action;
+    switch(a){
+      case "switch-role":
+        S.role = null; S.view = "cover"; S.modal = null; render(); break;
+      case "toast":
+        toast(el.dataset.msg || "演示操作"); break;
+      case "jnext":
+        if(S.jstep < 4) S.jstep++; render(); break;
+      case "jreset":
+        S.jstep = 0; render(); break;
+      case "filter-industry":
+        S.poolIndustry = el.dataset.ind; render(); break;
+      case "reset-pool":
+        S.poolIndustry = "全部"; S.poolQuery = ""; render(); break;
+      case "search": {
+        const q = document.getElementById("poolSearch");
+        S.poolQuery = q ? q.value.trim() : ""; render(); break;
+      }
+      case "toggle-coef":
+        S.coefOn[el.dataset.key] = !S.coefOn[el.dataset.key];
+        S.adjust = null; render(); break;
+      case "adjust": {
+        const amt = parseFloat(document.getElementById("adjAmt")?.value || "0");
+        const reason = (document.getElementById("adjReason")?.value || "").trim();
+        const base = limitCalc().suggest;
+        if(!amt || !reason){ toast("请填写调整额度与理由"); break; }
+        S.adjust = { amount: amt, reason, delta: (amt-base)/base*100, over20: Math.abs((amt-base)/base) > 0.2 };
+        toast(S.adjust.over20 ? "已留痕，并进入复核队列" : "调整已留痕，原测算值保留");
+        break;
+      }
+      case "approve":
+        S.modal = { type:"approve" }; render(); break;
+      case "reject":
+        S.modal = { type:"reject" }; render(); break;
+      case "letter":
+        S.modal = { type:"letter" }; render(); break;
+      case "publish":
+        S.modal = { type:"publish" }; render(); break;
+      case "rollback":
+        S.modal = { type:"rollback" }; render(); break;
+      case "select-tpl":
+        if(parseInt(el.dataset.idx)===0){ S.tplIdx = 0; render(); }
+        else toast("模板列表为造数；编辑区以赣南脐橙 v1.5 为例");
+        break;
+      case "close-modal":
+        S.modal = null; render(); break;
+      case "confirm-approve": {
+        const d = D.detail;
+        d.state = "银行审批通过"; d.stateCode = "S09";
+        const a = D.apps.find(x=>x.no==="NX2026120007");
+        if(a){ a.state = "银行审批通过"; a.stateCode = "S09"; a.tone = "green"; }
+        S.modal = null;
+        toast("审批已通过 · S09，事件已留痕");
+        break;
+      }
+      case "confirm-reject": {
+        const d = D.detail;
+        d.state = "待补材料"; d.stateCode = "S06";
+        const a = D.apps.find(x=>x.no==="NX2026120007");
+        if(a){ a.state = "待补材料"; a.stateCode = "S06"; a.tone = "amber"; a.manager = "陈旻"; }
+        S.modal = null;
+        toast("已退回补件 · S06，一次告知清单已发送");
+        break;
+      }
+      case "confirm-letter":
+        D.guarantee.reviewTarget.status = "担保函已出具";
+        S.modal = null;
+        toast("担保函 NXD-2026-0087 已出具，回执已归档");
+        break;
+      case "confirm-publish":
+        S.modal = null;
+        toast("v1.5 已发布，灰度 20%，在途单据继续使用 v1.3 快照");
+        break;
+      case "confirm-rollback":
+        S.modal = null;
+        toast("已回滚至 v1.3，记录写入审计日志");
+        break;
+    }
+  });
+
+  document.addEventListener("keydown", e => {
+    if(e.key==="Enter" && e.target.id==="poolSearch"){
+      S.poolQuery = e.target.value.trim(); render();
+    }
+  });
+
+  document.addEventListener("input", e => {
+    if(e.target.id==="grayRange"){
+      S.gray = parseInt(e.target.value);
+      const v = document.getElementById("grayVal");
+      if(v) v.textContent = S.gray + "%";
+      return;
+    }
+    const key = e.target.dataset.live;
+    if(key){
+      const v = parseFloat(e.target.value);
+      if(!isNaN(v)){ S.tpl[key] = v; refreshTrial(); }
+    }
+  });
+
+  function refreshTrial(){
+    const list = document.getElementById("trial-list");
+    if(!list) return;
+    list.innerHTML = D.admin.trial.samples.map((s,i)=>{
+      const r = tplCalc(s);
+      const veto = Object.values(S.tpl.veto).some(Boolean);
+      return `<div class="trial">
+        <div class="trial-head"><b>${esc(s.name)}</b><span class="flag">样例 ${i+1}</span></div>
+        <div class="trial-line"><span>销售收入 × 0.56</span><strong>${(s.sales*0.56).toFixed(2)} 万元</strong></div>
+        <div class="trial-line"><span>面积 × 亩均投入 × 系数</span><strong>${(s.area*s.perMu*S.tpl.coef/10000).toFixed(2)} 万元</strong></div>
+        <div class="trial-line"><span>政策上限</span><strong>${S.tpl.cap} 万元</strong></div>
+        <div class="trial-result"><span style="font-size:10px;color:var(--ink-3)">建议额度</span><span class="amt">${veto?"转人工":nf(r)+" 万元"}</span></div>
+      </div>`;
+    }).join("");
+    const flag = document.getElementById("trial-flag");
+    if(flag){
+      const veto = Object.values(S.tpl.veto).some(Boolean);
+      flag.className = "pill " + (veto ? "pill-amber" : "pill-green");
+      flag.innerHTML = `<i></i>${veto?"1 项否决命中":"3 / 3 通过"}`;
+    }
+    const vs = document.getElementById("veto-state");
+    if(vs) vs.textContent = Object.values(S.tpl.veto).some(Boolean) ? "命中 · 试算转人工复核" : "未命中";
+    const json = document.getElementById("rule-json");
+    if(json) json.innerHTML = ruleJson();
+  }
+
+  /* 深链：便于评审时直接打开某一端、某一页签 */
+  (function initFromHash(){
+    const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+    if(!h) return;
+    const [role, view, tab] = h.split("/");
+    if(!["client","bank","guarantee","admin"].includes(role)) return;
+    S.role = role;
+    const fallback = { client:"client", bank:"bank-home", guarantee:"g-home", admin:"admin-tpl" }[role];
+    S.view = view || fallback;
+    S.tab = tab || "overview";
+  })();
+
+  render();
+})();
+
+</script>
+</body>
+</html>
